@@ -56,25 +56,23 @@
                                 dark
                                 max-width="600"
                         >
-                            <v-card-text>
-                                <v-sheet color="rgba(0, 0, 0, .12)">
-                                    <v-sparkline
-                                            :value="value"
-                                            color="rgba(255, 255, 255, .7)"
-                                            height="100"
-                                            padding="24"
-                                            stroke-linecap="round"
-                                            smooth
-                                    >
-                                        <template v-slot:label="item">
-                                            ${{ item.value }}
-                                        </template>
-                                    </v-sparkline>
-                                </v-sheet>
-                            </v-card-text>
+                            <v-sheet color="rgba(0, 0, 0, .12)">
+                                <v-sparkline
+                                        :value="rating_history"
+                                        color="rgba(255, 255, 255, .7)"
+                                        height="100"
+                                        padding="24"
+                                        smooth
+                                        auto-draw-duration="2000"
+                                >
+                                    <template v-slot:label="rating_history" v-if="false">
+                                        ${{ rating_history.value }}
+                                    </template>
+                                </v-sparkline>
+                            </v-sheet>
 
                             <v-card-text>
-                                <div class="display-1 font-weight-thin">Sales Last 24h</div>
+                                <div class="display-1 font-weight-thin">Rating History</div>
                             </v-card-text>
 
                             <v-divider></v-divider>
@@ -350,6 +348,32 @@
 
             value: 100,
             time: '2019-01-03',
+          },
+
+        ],
+        rating_history: [
+          {
+            value: 100,
+            time: '2019-03-03',
+          },
+          {
+
+            value: 90,
+            time: '2019-02-03',
+          },
+          {
+
+            value: 80,
+            time: '2019-01-03',
+          },
+          {
+            value: 85,
+            time: '2019-15-03',
+          },
+          {
+
+            value: 30,
+            time: '2019-15-02',
           },
 
         ]
