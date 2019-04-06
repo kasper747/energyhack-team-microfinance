@@ -19,7 +19,8 @@ if (   isset($_GET['username'])  ) {
     //these are the different credit worthiness rating from best to worst
 
     //AAA AA A BBB BB B CCC C D
-    //[8..0]
+    //[8..0] GRANT ALL PRIVILEGES ON api_essen.* TO 'api_essen'@'%' IDENTIFIED BY 'api_essen';
+
 
 
     $status['type']    = "OK";
