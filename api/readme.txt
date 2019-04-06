@@ -1,6 +1,6 @@
 How to trigger the API:
 
-Get all Messages who are in the Database:
+Get all Messages which are in the Database:
 GET api/getMessages.php?id=-1
 
 Get a specific Message:
