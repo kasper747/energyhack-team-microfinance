@@ -1,5 +1,6 @@
 <?php
 include ('db.php');
+include_once("base.php");
 
 header("Content-Type:application/json");
 

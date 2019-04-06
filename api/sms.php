@@ -1,5 +1,5 @@
 <?php
-
+include_once("base.php");
 header("Content-Type:application/json");
 
 if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_GET['number'] != "")
@@ -11,17 +11,21 @@ if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_G
 
     $entry["text"]=$text;
     $entry["number"]=$number;
+
+    //insert block into factum blockchain.
     $myresponse = insert_block_into_factum($entry);
 
     $response_json=json_decode($myresponse);
     //echo($myresponse);
     $block_link=make_link_from_block_hash(json_decode($myresponse)->entry_hash);
 
+    insert_deposit_100($con);
+
 	$result = mysqli_query($con, "INSERT INTO messages (message, fromNumber, block_link) VALUES ('$text', '$number', '$block_link')");
 	if ($result === TRUE)
 		{
 
-		//insert block into factum blockchain.
+
 		$status['type'] = "OK";
 		$status['code'] = 200;
 		$status['message'] = "Message added into the database.";
@@ -62,6 +66,17 @@ function response($response)
 
 function get_chain_id(){
     return "086c905173fa90fa1809741f2a0febc0aeea0a058454167973036f04e590218a";
+}
+
+function insert_deposit_100($con){
+    $sql = "insert into transactions (sourceuser,targetuser,amount) values ('deposit',". wrap(get_default_target_user()) . ");";
+    return insert_into(
+        $con,
+        "transactions",
+        array("sourceuser","targetuser","amount"),
+        array(wrap("deposit"),wrap(get_default_target_user()),"100")
+    );
+
 }
 
 function make_link_from_block_hash($block_hash){
