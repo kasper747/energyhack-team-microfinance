@@ -30,7 +30,7 @@
 <div id="app">
     <v-app>
         <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm10 offset-sm1>
                 <v-card>
                     <v-toolbar color="teal" dark>
                         <v-toolbar-side-icon></v-toolbar-side-icon>
@@ -54,7 +54,7 @@
                                 class="mx-auto text-xs-center"
                                 color="green"
                                 dark
-                                max-width="600"
+                                max-width="800"
                         >
                             <v-sheet color="rgba(0, 0, 0, .12)">
                                 <v-sparkline
@@ -141,6 +141,42 @@
 
                             </template>
                         </v-data-table>
+                        <h3>Messages Overview</h3>
+                        <v-data-table
+                                :headers="headers_messages"
+                                :items="messages"
+                                class="elevation-1"
+                        >
+                            <template v-slot:items="props">
+
+                                <td class="text-xs-left">
+                                    {{ props.item.id }}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{ props.item.message }}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{ props.item.fromNumber }}
+                                </td>
+
+                                <td class="text-xs-left">
+                                    <v-flex row>
+                                        <a :href="props.item.block_link">
+                                            <v-badge right overlap big color="red">
+                                                <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                    <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                                </template>
+                                                <v-btn @click="props.item.block_link" small color="white darken-1">
+                                                    open block in chain
+                                                </v-btn>
+                                            </v-badge>
+                                        </a>
+                                    </v-flex>
+                                </td>
+
+
+                            </template>
+                        </v-data-table>
 
 
                         <v-divider></v-divider>
@@ -184,6 +220,11 @@
 
   var get_user_balance = axios.create({
     url: 'balance.php?username=consumer1',
+    method: 'GET',
+    strictSSL: false,
+  });
+  var get_messages = axios.create({
+    url: 'getMessages.php',
     method: 'GET',
     strictSSL: false,
   });
@@ -231,6 +272,26 @@
             value: 'time'
           }
         ],
+        headers_messages: [
+          {
+            text: 'ID',
+            align: 'left',
+            sortable: false,
+            value: 'id'
+          },
+          {
+            text: 'Value in EUR',
+            value: 'message'
+          },
+          {
+            text: 'From phone number',
+            value: 'fromNumber'
+          },
+          {
+            text: 'Blockchain Link',
+            value: 'block_link'
+          }
+        ],
         view: 'consumer',
         value: [
           423,
@@ -247,25 +308,45 @@
             balance_total: 49,
             balance_total_new: this.user_balance_new - 49,
             rating: "A",
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+            producer:1
           },
           {
             user_name: 'Jason Oner',
             avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
             balance_total: 100,
             rating: 'AAA',
+            producer:1
           },
           {
             user_name: 'Ranee Carlson',
             balance_total: 99,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             rating: "BB",
+            producer:1
           },
           {
             user_name: 'Cindy Baker',
             balance_total: 34,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             rating: "C",
+            producer:1
+          }
+        ],
+        producer: [
+          {
+            user_name: 'Ranee Carlson',
+            balance_total: 99,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            rating: "BB",
+            id:1
+          },
+          {
+            user_name: 'Cindy Baker',
+            balance_total: 34,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            rating: "C",
+            id:2,
           }
         ],
         trans_history: [
@@ -313,7 +394,9 @@
             time: '2019-15-02',
           },
 
-        ]
+        ],
+        messages: [],
+        last_message: {},
       }
     },
     watch: {
@@ -322,7 +405,15 @@
       }
     },
     methods: {
-      update_balance: function () {
+      filter_messages: function (messages) {
+        let clean_messages = [];
+        for (let i = 0; i < messages.length; i++) {
+          let x = messages[i];
+          if (x.block_link && x.block_link.includes('factom')) {
+            clean_messages.push(x);
+          }
+        }
+        this.messages = clean_messages;
       }
     }
   });
@@ -336,7 +427,19 @@
         // handle error
         console.log(error);
       });
-  console.log('Danach-', user_balance_new);
+  get_messages({})
+      .then(function (response) {
+        // handle success
+        vue.messages = Array(response.data.data.user)[0];
+        console.log('All messages', vue.messages);
+        console.log('One Message', vue.messages[vue.messages.length - 1]);
+
+        vue.filter_messages(vue.messages);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
 
 
 </script>
