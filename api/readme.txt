@@ -9,3 +9,6 @@ http://it-jansen.com/api/v1/getMessages.php?id= -> Insert the ID
 Insert SMS Data
 http://it-jansen.com/api/v1/sms.php?text=Test&number=01753271881
 
+IFTTT-Login:
+email: ifttt-essen@opentrash.com
+passw: wearethebest
