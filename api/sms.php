@@ -9,26 +9,23 @@ if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_G
 	$text = $_GET['text'];
 	$number = $_GET['number'];
 
-    $test["username"]="consumer1";
-    $myresponse = insert_block_into_factum($test);
+    $entry["text"]=$text;
+    $entry["number"]=$number;
+    $myresponse = insert_block_into_factum($entry);
 
     $response_json=json_decode($myresponse);
     //echo($myresponse);
-    $block_link=json_decode($myresponse)->entry_hash;
+    $block_link=make_link_from_block_hash(json_decode($myresponse)->entry_hash);
 
 	$result = mysqli_query($con, "INSERT INTO messages (message, fromNumber, block_link) VALUES ('$text', '$number', '$block_link')");
 	if ($result === TRUE)
 		{
 
 		//insert block into factum blockchain.
-
-
 		$status['type'] = "OK";
 		$status['code'] = 200;
 		$status['message'] = "Message added into the database.";
 		$status['error'] = false;
-
-
 
 		$status['message'] .= " and block added to chain";
 		$status["block info"] = json_decode($myresponse);
@@ -43,10 +40,6 @@ if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_G
 		$status['code'] = 404;
 		$status['message'] = "Message not added into the database.";
 		$status['error'] = true;
-
-		// $response['status'] = $status;
-		// response($response);
-
 		}
 	}
   else
@@ -55,10 +48,7 @@ if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_G
 	$status['code'] = 400;
 	$status['message'] = "The parameters are wrong.";
 	$status['error'] = true;
-
-	// $response['status'] = $status;
 	// response($response);
-
 	}
 
 $response['status'] = $status;
@@ -70,6 +60,14 @@ function response($response)
 	echo $json_response;
 	}
 
+function get_chain_id(){
+    return "086c905173fa90fa1809741f2a0febc0aeea0a058454167973036f04e590218a";
+}
+
+function make_link_from_block_hash($block_hash){
+    return "https://explorer.factom.com/chains/".get_chain_id()."/entries/".$block_hash;
+}
+
 function insert_block_into_factum($block_contents){
 
     $curl = curl_init();
@@ -77,12 +75,10 @@ function insert_block_into_factum($block_contents){
     $postfields1['external_ids']=array(base64_encode(json_encode($block_contents)));
     $postfields1['content']=base64_encode(json_encode($block_contents));
 
-
-
     //echo($postfields1);
 
     curl_setopt_array($curl, array(
-      CURLOPT_URL => "https://ephemeral.api.factom.com/v1/chains/086c905173fa90fa1809741f2a0febc0aeea0a058454167973036f04e590218a/entries",
+      CURLOPT_URL => "https://ephemeral.api.factom.com/v1/chains/".get_chain_id()."/entries",
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_ENCODING => "",
       CURLOPT_MAXREDIRS => 10,
