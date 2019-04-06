@@ -242,8 +242,40 @@
 
 </body>
 <script src="./dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="./dist/vuetify.js"></script>
 <script>
+  const axios = require('axios');
+  axios.defaults.baseURL = 'http://energyhack-team-microfinance.vanautrui.org/api/balance.php?username=consumer1';
+
+  axios.defaults.headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Credentials': 'true',
+  };
+
+
+  axios.defaults.validateStatus = function (status) {
+    if (status == 401) {
+      user_account.request_login();
+    }
+    return status >= 200 && status < 300; // default
+  };
+
+  var get_user_balance = axios.create({
+    method: 'GET',
+    strictSSL: false,
+  });
+  var user_balance_new = 0;
+  get_user_balance.then(function (response) {
+    // handle success
+    console.log(response);
+    user_balance_new = response.data.user.balance;
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+
 
   var vue = new Vue({
     el: '#app',
@@ -320,7 +352,7 @@
           {
             user_name: 'Ali Connors',
             balance_total: 49,
-            balance_total_new: 11,
+            balance_total_new: user_balance_new -49,
             rating: "A",
             rating_plus: 120,
 
@@ -380,9 +412,6 @@
       }
     }
   });
-
-
-
 
 
 </script>
