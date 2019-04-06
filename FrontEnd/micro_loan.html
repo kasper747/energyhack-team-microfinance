@@ -41,6 +41,11 @@
                         <v-btn icon>
                             <v-icon>search</v-icon>
                         </v-btn>
+                        <v-toolbar-items class="hidden-sm-and-down">
+                            <v-btn flat>Link One</v-btn>
+                            <v-btn flat>Link Two</v-btn>
+                            <v-btn flat>Link Three</v-btn>
+                        </v-toolbar-items>
                     </v-toolbar>
 
                     <v-list subheader>
@@ -87,17 +92,9 @@
 </div>
 
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-
 </body>
-<script src="dist/vue.js"></script>
-<script src="dist/vuetify.js"></script>
+<script src="./dist/vue.js"></script>
+<script src="./dist/vuetify.js"></script>
 <script>
   var vue = new Vue({
     el: '#app',
@@ -106,24 +103,30 @@
         users: [
           {
             user_name: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            balance_total:100,
-            balance_total_new:10,
+            balance_total: 100,
+            balance_total_new: 10,
           },
-          {user_name: 'Ranee Carlson',
-            balance_total:99,
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg'},
-          {user_name: 'Cindy Baker',
-            balance_total:34,
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'},
-          {user_name: 'Ali Connors',
-            balance_total:49,
-            balance_total_new:11,
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'}
+          {
+            user_name: 'Ranee Carlson',
+            balance_total: 99,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg'
+          },
+          {
+            user_name: 'Cindy Baker',
+            balance_total: 34,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg'
+          },
+          {
+            user_name: 'Ali Connors',
+            balance_total: 49,
+            balance_total_new: 11,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'
+          }
         ]
       }
     },
     methods: {
-      update_balance:function () {
+      update_balance: function () {
 
       }
     }
