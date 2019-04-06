@@ -245,13 +245,12 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="./dist/vuetify.js"></script>
 <script>
-  const axios = require('axios');
-  axios.defaults.baseURL = 'http://energyhack-team-microfinance.vanautrui.org/api/balance.php?username=consumer1';
 
-  axios.defaults.headers = {
+  axios.defaults.headers.post = {
+    'Access-Control-Allow-Origin': 'energyhack-team-microfinance.vanautrui.org',
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Credentials': 'true',
   };
+  axios.defaults.baseURL = 'http://energyhack-team-microfinance.vanautrui.org/api/';
 
 
   axios.defaults.validateStatus = function (status) {
