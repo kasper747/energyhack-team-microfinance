@@ -2,8 +2,8 @@ How to trigger the API:
 
 // ENDPOINTS:
 
-//get all messages
-/api/getMessages.php?id=-1
+get all messages        /api/getMessages.php?id=-1
 
-//get a specific message
-/api/getMessages.php?id=1
+get a specific message  /api/getMessages.php?id=1
+
+Insert SMS Data         /api/v1/sms.php?text=Test&number=01753271881
