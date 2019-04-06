@@ -83,7 +83,14 @@
                         </v-card>
                         <div>
                             <h1>
-                                Hello Peter, your balance is [TODO] and your credit rating is: [TODO]
+                                Hello consumer1, your balance is
+                                <p id="user-balance">
+                                    [TODO]
+                                </p>
+                                and your credit rating is:
+                                <p id="user-credit-rating">
+                                    [TODO]
+                                </p>
                             </h1>
                         </div>
                         <h3>Transaction History</h3>
@@ -251,6 +258,7 @@
 <script src="./dist/vue.js"></script>
 <script src="./dist/vuetify.js"></script>
 <script>
+
   var vue = new Vue({
     el: '#app',
     data() {
@@ -340,7 +348,7 @@
             time: '2019-03-03',
           },
           {
-            phone_number: '+491577',
+            phone_number: "test",
 
             value: 100,
             time: '2019-02-03',
@@ -360,5 +368,10 @@
       }
     }
   });
+
+
+
+
+
 </script>
 </html>
