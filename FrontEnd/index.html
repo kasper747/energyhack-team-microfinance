@@ -9,671 +9,310 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-
     <title>Virgin App</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="    https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="dist/vuetify.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
 
-<link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
-<script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyDjOGPxQGORjjajlbMpM1FvCAxWSYXJ4Ak",
-    authDomain: "virginapp-ad4c8.firebaseapp.com",
-    databaseURL: "https://virginapp-ad4c8.firebaseio.com",
-    projectId: "virginapp-ad4c8",
-    storageBucket: "virginapp-ad4c8.appspot.com",
-    messagingSenderId: "627360026692"
-  };
-  firebase.initializeApp(config);
-</script>
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <style>
-        .loader {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -50px 0px 0px -50px;
-        }
-
-        /* Safari */
-
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .v-btn__content {
-            color: white;
-        }
-
-    </style>
 
 </head>
 
 <body id="page-top">
+
+<!-- Page Wrapper -->
 <div id="app">
     <v-app>
-        <!-- Page Wrapper -->
-        <div id="wrapper">
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-card>
+                    <v-toolbar color="teal" dark>
+                        <v-toolbar-side-icon></v-toolbar-side-icon>
 
-            <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+                        <v-toolbar-title class="text-xs-center">{{view}}'s view</v-toolbar-title>
 
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">Virgin App</div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Home</span></a>
-                </li>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item ">
-                    <a class="nav-link collapsed" href="recommendations.html">
-                        <i class="fas fa-fw fa-shopping-basket"></i>
-                        <span>Purchase</span>
-                    </a>
-                </li>
-
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item ">
-                    <a class="nav-link collapsed" href="doctorsList.html">
-                        <i class="fas fa-fw fa-user-md"></i>
-                        <span>Doctors</span>
-                    </a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Planning
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item ">
-                    <a class="nav-link collapsed" href="intelligentPlanning.html">
-                        <i class="fas fa-fw fa-lock"></i>
-                        <span>Permissions</span>
-                    </a>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="planningAlarm.html">
-                        <i class="fas fa-fw fa-bell"></i>
-                        <span>Alarms</span></a>
-                </li>
-
-                <!-- Nav Item - Tables -->
-                <li class="nav-item ">
-<<<<<<< develop
-                    <a class="nav-link" href="micro_loan.html">
-=======
-                    <a class="nav-link" href="planningSocial.html">
->>>>>>> First fron end commit
-                        <i class="fas fa-fw fa-users"></i>
-                        <span>Social</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
-            </ul>
-            <!-- End of Sidebar -->
-
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-
-                <!-- Main Content -->
-                <div id="content">
-
-                    <!-- Topbar -->
-                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                        <!-- Sidebar Toggle (Topbar) -->
-                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                            <i class="fa fa-bars"></i>
-                        </button>
-
-                        <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small"
-                                       placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <!-- Topbar Navbar -->
-                        <ul class="navbar-nav ml-auto">
-
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                            <li class="nav-item dropdown no-arrow d-sm-none">
-                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                     aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto w-100 navbar-search">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control bg-light border-0 small"
-                                                   placeholder="Search for..." aria-label="Search"
-                                                   aria-describedby="basic-addon2">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </li>
-
-                            <!-- Nav Item - Alerts -->
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
-                                    <span class="badge badge-danger badge-counter">3+</span>
-                                </a>
-                                <!-- Dropdown - Alerts -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="alertsDropdown">
-                                    <h6 class="dropdown-header">
-                                        Alerts Center
-                                    </h6>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 12, 2019</div>
-                                            <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-success">
-                                                <i class="fas fa-donate text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 7, 2019</div>
-                                            $290.29 has been deposited into your account!
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-warning">
-                                                <i class="fas fa-exclamation-triangle text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 2, 2019</div>
-                                            Spending Alert: We've noticed unusually high spending for your account.
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All
-                                        Alerts</a>
-                                </div>
-                            </li>
-
-                            <!-- Nav Item - Messages -->
-                            <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-envelope fa-fw"></i>
-                                    <!-- Counter - Messages -->
-                                    <span class="badge badge-danger badge-counter">7</span>
-                                </a>
-                                <!-- Dropdown - Messages -->
-                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="messagesDropdown">
-                                    <h6 class="dropdown-header">
-                                        Message Center
-                                    </h6>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle"
-                                                 src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                                            <div class="status-indicator bg-success"></div>
-                                        </div>
-                                        <div class="font-weight-bold">
-                                            <div class="text-truncate">Hi there! I am wondering if you can help me with
-                                                a problem I've been having.
-                                            </div>
-                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle"
-                                                 src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                                            <div class="status-indicator"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">I have the photos that you ordered last month,
-                                                how would you like them sent to you?
-                                            </div>
-                                            <div class="small text-gray-500">Jae Chun · 1d</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle"
-                                                 src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                                            <div class="status-indicator bg-warning"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">Last month's report looks great, I am very happy
-                                                with the progress so far, keep up the good work!
-                                            </div>
-                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="dropdown-list-image mr-3">
-                                            <img class="rounded-circle"
-                                                 src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                                            <div class="status-indicator bg-success"></div>
-                                        </div>
-                                        <div>
-                                            <div class="text-truncate">Am I a good boy? The reason I ask is because
-                                                someone told me that people say this to all dogs, even if they aren't
-                                                good...
-                                            </div>
-                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                        </div>
-                                    </a>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More
-                                        Messages</a>
-                                </div>
-                            </li>
-
-                            <div class="topbar-divider d-none d-sm-block"></div>
-
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                                </a>
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
-                                    </a>
-                                </div>
-                            </li>
-
-                        </ul>
-
-                    </nav>
-                    <!-- End of Topbar -->
-
-                    <!-- Begin Page Content -->
-                    <div class="container-fluid">
-
-                        <!-- Content Row -->
-                        <div class="row">
-
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-10 col-md-10 mb-10 offset-xl-1 offset-md-1 offset-mb-1"
-                                 style="margin-top: 20px">
-                                <form>
-
-                                    <h3 class="text-center">Discover your fit!</h3>
-                                    <hr style="width: 100%; color: grey; height: 1px; background-color:grey;"/>
-                                    </br>
-
-                                    <div class="form-group row">
-                                        <v-layout row>
-
-                                            <v-flex xs8>
-                                                <label for="colFormLabelSm"
-                                                       class="col-sm-9 col-form-label col-form-label-lg">Your age?</label>
-                                            </v-flex>
-                                            <v-flex xs4>
-                                                <input type="number" v-model='age' class="form-control" id="usr"
-                                                       value="25" style="width: 70px">
-                                            </v-flex>
-                                        </v-layout>
+                        <v-spacer></v-spacer>
 
 
-                                    </div>
+                        <v-toolbar-items class="hidden-sm-and-down">
+                            <v-btn flat @click="view='consumer'">Consumer</v-btn>
+                            <v-btn flat @click="view='producer'">Producer</v-btn>
+                            <v-btn flat @click="view='bank'">Bank</v-btn>
+                        </v-toolbar-items>
+                        <v-btn icon>
+                            <v-icon>search</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+                    <v-conainer v-if="view==='consumer'">
+                        <h3>Transaction History</h3>
+                        <v-data-table
+                                :headers="headers_transactions"
+                                :items="trans_history"
+                                class="elevation-1"
+                        >
+                            <template v-slot:items="props">
 
-                                    <div class="form-group row" v-for="item in questioner">
-                                        <v-layout row justify-center align-center>
+                                <td>
+                                    {{ props.item.phone_number }}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{props.item.value}}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{props.item.time}}
+                                </td>
+                            </template>
+                        </v-data-table>
+                        <h3>Consumers Overview</h3>
 
-                                            <v-flex xs8>
-                                                <label for="colFormLabelSm"
-                                                       class="col-sm-10 col-form-label col-form-label-lg">{{item.question}}</label>
+                        <v-data-table
+                                :headers="headers_user"
+                                :items="users"
+                                class="elevation-1"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <v-avatar size="36">
+                                        <img :src="props.item.avatar">
+                                    </v-avatar>
+                                </td>
+                                <td>
+                                    {{ props.item.user_name }}
+                                </td>
+                                <td class="text-xs-right">
+                                    <v-flex row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{props.item.rating}}
+                                            </v-btn>
+                                        </v-badge>
+                                    </v-flex>
+                                </td>
+                                <td class="text-xs-right">
+                                    <v-flex row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="props.item.balance_total_new>0">
+                                                <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{props.item.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
+                                    </v-flex>
+                                </td>
 
-                                            </v-flex>
-                                            <v-flex xs4 style="margin-top: 5px">
-                                                <div class="btn-group btn-group-toggle" data-toggle="buttons"
-                                                     id="hormonal_contraspective_method">
-                                                    <v-btn-toggle mandatory blue v-model="item.answer"
-                                                                  default="undefined">
-                                                        <v-btn color="info" style="display: none">
-                                                            undef
-                                                        </v-btn>
-                                                        <v-btn color="info">
-                                                            yes
-                                                        </v-btn>
-                                                        <v-btn color="info">
-                                                            no
-                                                        </v-btn>
-                                                    </v-btn-toggle>
-
-                                                </div>
-                                            </v-flex>
-                                        </v-layout>
+                            </template>
+                        </v-data-table>
 
 
-                                    </div>
-                                    <v-layout row justify-end align-end>
-                                        <v-flex xs4>
-                                            <div class="col-xs-12 col-md-12"  @click="fn_calculate_recommednatiotns" style="margin-top: 20px">
-                                                <input type="button" class="btn btn-primary float-left btn-lg"
-                                                       value="Next"
-                                                       >
+                        <v-divider></v-divider>
+                    </v-conainer>
+                    <!--Producer View-->
+                    <v-conainer v-if="view==='producer'">
 
-                                            </div>
-                                        </v-flex>
+                        <v-list subheader>
+                            <v-subheader>View of {{view}}</v-subheader>
+                            <v-list-tile
+                                    v-for="user in users"
+                                    :key="user.user_name"
+                                    avatar
+                                    @click=""
+                            >
+                                <v-list-tile-avatar>
+                                    <img :src="user.avatar">
+                                </v-list-tile-avatar>
+
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="user.user_name"></v-list-tile-title>
+                                </v-list-tile-content>
+
+                                <v-list-tile-action>
+                                    <v-layout row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.balance_total_new>0">
+                                                <span style="font-size: 12px">+{{user.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
+                                        <v-btn style="display: none"></v-btn>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.rating_plus>0">
+                                                <span style="font-size: 12px">+{{user.rating_plus}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.rating}}
+                                            </v-btn>
+                                        </v-badge>
+
 
                                     </v-layout>
 
-                                    <div class="loader" role="status" style="display: None" id="loadingDiv">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
 
-                                   
+                        <v-divider></v-divider>
+                    </v-conainer>
+                    <v-conainer v-if="view==='bank'">
+                        <v-subheader>View of {{view}}</v-subheader>
+                        <v-list subheader>
 
-                                </form>
-                            </div>
-                        </div>
+                            <v-list-tile
+                                    v-for="user in users"
+                                    :key="user.user_name"
+                                    avatar
+                                    @click=""
+                            >
+                                <v-list-tile-avatar>
+                                    <img :src="user.avatar">
+                                </v-list-tile-avatar>
 
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="user.user_name"></v-list-tile-title>
+                                </v-list-tile-content>
 
+                                <v-list-tile-action>
+                                    <v-flex row>
 
-                    </div>
-                    <!-- End of Main Content -->
- <!-- /.container-fluid -->
-                        
-                    <!-- End of Footer iframe src='https://webchat.botframework.com/embed/ContraV1?s=n3XldZsXW6M.pXxL8iGX6s4bfxMyGLYy_lCY5UAy7besJ2xjOqpzw3c'  style='min-width: 200px;  min-height: 300px;position: fixed; bottom: 0; z-index: 1000;right: 0'></iframe>-->
-<
-                </div>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.balance_total_new>0">
+                                                <span style="font-size: 12px">+{{user.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
 
-                <!-- End of Content Wrapper -->
+                                    </v-flex>
 
-            </div>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
 
-            <!-- End of Page Wrapper -->
-
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <v-divider></v-divider>
+                    </v-conainer>
 
 
-        </div>
+                </v-card>
+            </v-flex>
+        </v-layout>
     </v-app>
-
 </div>
-<script type="text/javascript">
 
-
-</script>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
 
 </body>
-<script type="text/javascript">
+<script src="./dist/vue.js"></script>
+<script src="./dist/vuetify.js"></script>
+<script>
   var vue = new Vue({
     el: '#app',
     data() {
       return {
-        text: 'center',
-        icon: 'justify',
-        toggle_none: null,
-        age: 25,
-        questioner: [
+        headers_user: [
           {
-            'idx': 0,
-            'question': '⚕️ Problems with blood pressure, heart, resent operations or strokes?',
+            text: 'Value',
+            align: 'left',
+            sortable: false,
+            value: 'value'
           },
           {
-            'idx': 1,
-            'question': '⚕️ Smoking?',
+            text: 'Name',
+            value: 'user_name'
           },
           {
-            'idx': 2,
-            'question': '❤️ Non-intrusive contraceptive methods'
+            text: 'Rating',
+            value: 'rating'
           },
           {
-            'idx': 3,
-            'question': '❤️ Fits with alcohol',
+            text: 'Balance',
+            value: 'balance_total'
           },
-          {
-            'idx': 4,
-            'question': '⚕️ Multiple active prescriptions?',
-          },
-          {
-            'idx': 5,
-            'question': '❤️ Less effort to track',
-          },
-          {
-            'idx': 6,
-            'question': '⚕️ Cancer family history?',
-          },
-          {
-            'idx': 7,
-            'question': '⚕️ Hepatitis, allergies?'
-          },
+
 
         ],
+        headers_transactions: [
+          {
+            text: 'Phone Number',
+            align: 'left',
+            sortable: false,
+            value: 'phone_number'
+          },
+          {
+            text: 'Amount',
+            value: 'value'
+          },
+          {
+            text: 'Time',
+            value: 'time'
+          }
+        ],
+        view: 'consumer',
+        users: [
+          {
+            user_name: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            balance_total: 100,
+            balance_total_new: 10,
+            rating: 100,
+            rating_plus: 120,
+          },
+          {
+            user_name: 'Ranee Carlson',
+            balance_total: 99,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            rating: 100,
+          },
+          {
+            user_name: 'Cindy Baker',
+            balance_total: 34,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            rating: 100,
+          },
+          {
+            user_name: 'Ali Connors',
+            balance_total: 49,
+            balance_total_new: 11,
+            rating: 100,
+            rating_plus: 120,
 
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'
+          }
+        ],
+        trans_history: [
+          {
+            phone_number: '+491577',
+            value: 100,
+            time: '2019-03-03',
+          },
+          {
+            phone_number: '+491577',
+
+            value: 100,
+            time: '2019-02-03',
+          },
+          {
+            phone_number: '+491577',
+
+            value: 100,
+            time: '2019-01-03',
+          },
+
+        ]
       }
     },
     methods: {
-      fn_calculate_recommednatiotns: function () {
-
-
-
-        var myDiv = document.getElementById("loadingDiv"),
-
-            show = function () {
-              myDiv.style.display = "block";
-              setTimeout(hide, 100); // 5 seconds
-            },
-
-            hide = function () {
-              myDiv.style.display = "none";
-              hormonal_contraspective_method = vue.questioner[5].answer == 1;
-              alchol_consumer = vue.questioner[3].answer == 1;
-              intrusive_contraspective_method = vue.questioner[2].answer == 1;
-              hepatitus = vue.questioner[7].answer == 1;
-              alergies = vue.questioner[7].answer == 1;
-              cancer = vue.questioner[6].answer == 1;
-              blood_pressure = vue.questioner[0].answer == 1;
-              other_diseases = vue.questioner[4].answer == 1;
-              surgeries = vue.questioner[7].answer == 1;
-              smoke = vue.questioner[1].answer == 1;
-
-
-              const encodeGetParams = p =>
-                  Object.entries(p).map(kv => kv.map(encodeURIComponent).join("=")).join("&");
-
-              var form = new FormData();
-              form.append("data", "{\n    \"less_effort\": " + intrusive_contraspective_method + ",\n    \"alcohol\": " + alchol_consumer + ",\n    \"hormoneless\": " + hormonal_contraspective_method + ",\n    \"hepatities\": " + hepatitus + ",\n    \"alergies\": " + alergies + ",\n    \"genetical_cancer\": " + cancer + ",\n    \"blood_preassure\": " + blood_pressure + ",\n    \"heart_disease\": " + other_diseases + ",\n    \"recent_operation\": " + surgeries + ",\n    \"smoke\": " + smoke + "\n}");
-
-              var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "http://52.176.154.208:8080/get_recommendation",
-                "method": "POST",
-                "headers": {
-                  "cache-control": "no-cache",
-                  "postman-token": "2f1c9cd8-9d5f-c748-093a-a51f871c6699"
-                },
-                "processData": false,
-                "contentType": false,
-                "mimeType": "multipart/form-data",
-                "data": form
-              }
-
-              $.ajax(settings).done(function (response) {
-                console.log(response);
-                response = JSON.parse(response);
-                keysSorted = Object.keys(response).sort(function (a, b) {
-                  return response[a] - response[b]
-                }).reverse()
-                resp = keysSorted.slice(0, 3).join(':');
-                console.log(resp);
-                location.href = 'recommendations.html?param=' + (resp);
-
-              })
-              hide = function () {
-                myDiv.style.display = "none";
-                location.href = 'recommendations.html';
-              };
-
-              
-            }
-            show();
+      update_balance: function () {
       }
     }
   });
-  
-</script>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
-<script>
-
 </script>
 </html>
