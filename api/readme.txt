@@ -1,14 +1,13 @@
 How to trigger the API:
 
 Get all Messages which are in the Database:
-GET api/getMessages.php?id=-1
+GET api/getMessages.php
 
-Get a specific Message:
-GET api/getMessages.php?id= -> Insert the ID
 
 Insert SMS Data
 POST api/sms.php?text=Test&number=01753271881
 
+CURRENTLY NOT WORKING:
 Get balance of a consumer or producer
 GET /api/balance.php?username=consumer1
 
