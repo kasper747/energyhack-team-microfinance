@@ -2,31 +2,25 @@
 
 header("Content-Type:application/json");
 
-if ( $_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["username"]) ){
+if ( $_SERVER["REQUEST_METHOD"]=="GET" ){
 
     include ('db.php');
-
-	$username = $_GET['username'];
 
 	$status['type'] = "OK";
 	$status['code'] = 200;
 	$status['message'] = "Database is available.";
 	$status['error'] = false;
 
-        $sql = "SELECT SUM(amount) AS total FROM transactions where targetuser='" . $username . "';";
-        //echo($sql);
-        //echo("<br>");
+    $sql = "SELECT SUM(amount) AS total FROM transactions where targetuser='" . get_default__target_user() . "';";
 
-		$result = mysqli_query($con, $sql);
+    //echo($sql);
 
-        $myrow = mysqli_fetch_array($result);
+    $result = mysqli_query($con, $sql);
 
-		//echo(implode(",",$myrow));
+    $myrow = mysqli_fetch_array($result);
 
-        $user['balance'] = $myrow['total'];
-        $data['user'] = $user;
-
-
+    $user['balance'] = $myrow['total'];
+    $data['user'] = $user;
 
 	$response['status'] = $status;
 	$response['data'] = $data;
@@ -34,10 +28,14 @@ if ( $_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["username"]) ){
 
 	$status['type'] = "Bad Request";
 	$status['code'] = 400;
-	$status['message'] = "The parameters are wrong.";
+	$status['message'] = "must be GET request";
 	$status['error'] = true;
 	$response['status'] = $status;
 
+}
+
+function get_default__target_user(){
+    return "consumer1";
 }
 
 response($response);
