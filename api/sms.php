@@ -1,4 +1,5 @@
 <?php
+
 header("Content-Type:application/json");
 
 if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_GET['number'] != "")
@@ -7,20 +8,30 @@ if (isset($_GET['text']) && $_GET['text'] != "" && isset($_GET['number']) && $_G
 
 	$text = $_GET['text'];
 	$number = $_GET['number'];
-	$result = mysqli_query($con, "INSERT INTO messages (message, fromNumber) VALUES ('$text', '$number')");
+
+    $test["username"]="consumer1";
+    $myresponse = insert_block_into_factum($test);
+
+    $response_json=json_decode($myresponse);
+    //echo($myresponse);
+    $block_link=json_decode($myresponse)->entry_hash;
+
+	$result = mysqli_query($con, "INSERT INTO messages (message, fromNumber, block_link) VALUES ('$text', '$number', '$block_link')");
 	if ($result === TRUE)
 		{
 
-		//TODO: insert block into factum blockchain.
-		//insert_block_into_factum($block_contents_json);
+		//insert block into factum blockchain.
+
 
 		$status['type'] = "OK";
 		$status['code'] = 200;
 		$status['message'] = "Message added into the database.";
 		$status['error'] = false;
 
-		insert_block_into_factum("{'test':'3'}");
+
+
 		$status['message'] .= " and block added to chain";
+		$status["block info"] = json_decode($myresponse);
 
 		// $response['status'] = $status;
 
@@ -59,32 +70,45 @@ function response($response)
 	echo $json_response;
 	}
 
-function insert_block_into_factum($block_contents_json){
+function insert_block_into_factum($block_contents){
+
+    $curl = curl_init();
+
+    $postfields1['external_ids']=array(base64_encode(json_encode($block_contents)));
+    $postfields1['content']=base64_encode(json_encode($block_contents));
 
 
-    $request = new HttpRequest();
-    $request->setUrl('https://ephemeral.api.factom.com/v1/chains/086c905173fa90fa1809741f2a0febc0aeea0a058454167973036f04e590218a/entries');
-    $request->setMethod(HTTP_METH_POST);
 
-    $request->setHeaders(array(
-      'Postman-Token' => '746ae812-7801-45b7-ba0f-f8e405d5c794',
-      'cache-control' => 'no-cache',
-      'app_key' => '2b9eee51f459412508c07cf853eb939f',
-      'app_id' => 'd01acae3',
-      'Content-Type' => 'application/json'
+    //echo($postfields1);
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "https://ephemeral.api.factom.com/v1/chains/086c905173fa90fa1809741f2a0febc0aeea0a058454167973036f04e590218a/entries",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_POSTFIELDS => json_encode($postfields1),
+      CURLOPT_HTTPHEADER => array(
+        "Content-Type: application/json",
+        "app_id: 014a84e7",
+        "app_key: e20f9985f1bbfecb7faa2d59cf83693a",
+        "cache-control: no-cache"
+      ),
     ));
 
-    $request->setBody('{
-        "external_ids":["RW5lcmd5TWljcm9DcmVkaXRz"],
-        "content":base64_encode($block_contents_json);
-    }');
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
 
-    try {
-      $response = $request->send();
+    curl_close($curl);
 
-      echo $response->getBody();
-    } catch (HttpException $ex) {
-      echo $ex;
+    if ($err) {
+      echo "cURL Error #:" . $err;
+      header("Content-Type:text/plain");
+    } else {
+      return $response;
+
     }
 }
 
