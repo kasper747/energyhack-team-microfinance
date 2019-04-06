@@ -10,11 +10,16 @@ if (   isset($_GET['username'])  ) {
 
     $username = $_GET['username'];
 
-    //credit score / 100
-    // (max credit score is 100)
-    $data["credit-score"]=50;
+    $credit_score_history=array(0,1,0,2,0,3,4,4,4,3,4,5,4,7,7,7);
 
+    //credit score
+    $data["credit-score"]=7;
+    $data["credit-score-history"]=$credit_score_history;
 
+    //these are the different credit worthiness rating from best to worst
+
+    //AAA AA A BBB BB B CCC C D
+    //[8..0]
 
 
     $status['type']    = "OK";
