@@ -49,6 +49,37 @@
                         </v-btn>
                     </v-toolbar>
                     <v-conainer v-if="view==='consumer'">
+                        <v-card
+                                class="mx-auto text-xs-center"
+                                color="green"
+                                dark
+                                max-width="600"
+                        >
+                            <v-card-text>
+                                <v-sheet color="rgba(0, 0, 0, .12)">
+                                    <v-sparkline
+                                            :value="value"
+                                            color="rgba(255, 255, 255, .7)"
+                                            height="100"
+                                            padding="24"
+                                            stroke-linecap="round"
+                                            smooth
+                                    >
+                                        <template v-slot:label="item">
+                                            ${{ item.value }}
+                                        </template>
+                                    </v-sparkline>
+                                </v-sheet>
+                            </v-card-text>
+
+                            <v-card-text>
+                                <div class="display-1 font-weight-thin">Sales Last 24h</div>
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+
+                        </v-card>
                         <h3>Transaction History</h3>
                         <v-data-table
                                 :headers="headers_transactions"
@@ -84,7 +115,7 @@
                                 <td>
                                     {{ props.item.user_name }}
                                 </td>
-                                <td class="text-xs-right">
+                                <td class="text-xs-left">
                                     <v-flex row>
                                         <v-badge right overlap big color="red">
                                             <template v-slot:badge v-if="props.item.rating_plus>0">
@@ -96,7 +127,7 @@
                                         </v-badge>
                                     </v-flex>
                                 </td>
-                                <td class="text-xs-right">
+                                <td class="text-xs-left">
                                     <v-flex row>
                                         <v-badge right overlap big color="red">
                                             <template v-slot:badge v-if="props.item.balance_total_new>0">
@@ -257,6 +288,15 @@
           }
         ],
         view: 'consumer',
+        value: [
+          423,
+          446,
+          675,
+          510,
+          590,
+          610,
+          760
+        ],
         users: [
           {
             user_name: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
