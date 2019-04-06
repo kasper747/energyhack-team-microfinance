@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Virgin App</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="    https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+</head>
+
+<body id="page-top">
+
+
+<!-- Page Wrapper -->
+<div id="app">
+    <v-app>
+        <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+                <v-card>
+                    <v-toolbar color="teal" dark>
+                        <v-toolbar-side-icon></v-toolbar-side-icon>
+
+                        <v-toolbar-title class="text-xs-center">{{view}}'s view</v-toolbar-title>
+
+                        <v-spacer></v-spacer>
+
+
+                        <v-toolbar-items class="hidden-sm-and-down">
+                            <v-btn flat @click="view='consumer'">Consumer</v-btn>
+                            <v-btn flat @click="view='producer'">Producer</v-btn>
+                            <v-btn flat @click="view='bank'">Bank</v-btn>
+                        </v-toolbar-items>
+                        <v-btn icon>
+                            <v-icon>search</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+                    <v-conainer v-if="view==='consumer'">
+                        <v-card
+                                class="mx-auto text-xs-center"
+                                color="green"
+                                dark
+                                max-width="600"
+                        >
+                            <v-sheet color="rgba(0, 0, 0, .12)">
+                                <v-sparkline
+                                        :value="rating_history"
+                                        color="rgba(255, 255, 255, .7)"
+                                        height="100"
+                                        padding="24"
+                                        smooth
+                                        auto-draw-duration="2000"
+                                >
+                                    <template v-slot:label="rating_history" v-if="false">
+                                        ${{ rating_history.value }}
+                                    </template>
+                                </v-sparkline>
+                            </v-sheet>
+
+                            <v-card-text>
+                                <div class="display-1 font-weight-thin">Rating History</div>
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+
+                        </v-card>
+                        <h3>Transaction History</h3>
+                        <v-data-table
+                                :headers="headers_transactions"
+                                :items="trans_history"
+                                class="elevation-1"
+                        >
+                            <template v-slot:items="props">
+
+                                <td>
+                                    {{ props.item.phone_number }}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{props.item.value}}
+                                </td>
+                                <td class="text-xs-left">
+                                    {{props.item.time}}
+                                </td>
+                            </template>
+                        </v-data-table>
+                        <h3>Consumers Overview</h3>
+
+                        <v-data-table
+                                :headers="headers_user"
+                                :items="users"
+                                class="elevation-1"
+                        >
+                            <template v-slot:items="props">
+                                <td>
+                                    <v-avatar size="36">
+                                        <img :src="props.item.avatar">
+                                    </v-avatar>
+                                </td>
+                                <td>
+                                    {{ props.item.user_name }}
+                                </td>
+                                <td class="text-xs-left">
+                                    <v-flex row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{props.item.rating}}
+                                            </v-btn>
+                                        </v-badge>
+                                    </v-flex>
+                                </td>
+                                <td class="text-xs-left">
+                                    <v-flex row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="props.item.balance_total_new>0">
+                                                <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{props.item.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
+                                    </v-flex>
+                                </td>
+
+                            </template>
+                        </v-data-table>
+
+
+                        <v-divider></v-divider>
+                    </v-conainer>
+                    <!--Producer View-->
+                    <v-conainer v-if="view==='producer'">
+
+                        <v-list subheader>
+                            <v-subheader>View of {{view}}</v-subheader>
+                            <v-list-tile
+                                    v-for="user in users"
+                                    :key="user.user_name"
+                                    avatar
+                                    @click=""
+                            >
+                                <v-list-tile-avatar>
+                                    <img :src="user.avatar">
+                                </v-list-tile-avatar>
+
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="user.user_name"></v-list-tile-title>
+                                </v-list-tile-content>
+
+                                <v-list-tile-action>
+                                    <v-layout row>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.balance_total_new>0">
+                                                <span style="font-size: 12px">+{{user.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
+                                        <v-btn style="display: none"></v-btn>
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.rating_plus>0">
+                                                <span style="font-size: 12px">+{{user.rating_plus}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.rating}}
+                                            </v-btn>
+                                        </v-badge>
+
+
+                                    </v-layout>
+
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
+
+                        <v-divider></v-divider>
+                    </v-conainer>
+                    <v-conainer v-if="view==='bank'">
+                        <v-subheader>View of {{view}}</v-subheader>
+                        <v-list subheader>
+
+                            <v-list-tile
+                                    v-for="user in users"
+                                    :key="user.user_name"
+                                    avatar
+                                    @click=""
+                            >
+                                <v-list-tile-avatar>
+                                    <img :src="user.avatar">
+                                </v-list-tile-avatar>
+
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="user.user_name"></v-list-tile-title>
+                                </v-list-tile-content>
+
+                                <v-list-tile-action>
+                                    <v-flex row>
+
+                                        <v-badge right overlap big color="red">
+                                            <template v-slot:badge v-if="user.balance_total_new>0">
+                                                <span style="font-size: 12px">+{{user.balance_total_new}}</span>
+                                            </template>
+                                            <v-btn small color="white darken-1">
+                                                {{user.balance_total}}
+                                            </v-btn>
+                                        </v-badge>
+
+                                    </v-flex>
+
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list>
+
+                        <v-divider></v-divider>
+                    </v-conainer>
+
+
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-app>
+</div>
+
+
+</body>
+<script src="./dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./dist/vuetify.js"></script>
+<script>
+  const axios = require('axios');
+  axios.defaults.baseURL = 'http://energyhack-team-microfinance.vanautrui.org/api/balance.php?username=consumer1';
+
+  axios.defaults.headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Credentials': 'true',
+  };
+
+
+  axios.defaults.validateStatus = function (status) {
+    if (status == 401) {
+      user_account.request_login();
+    }
+    return status >= 200 && status < 300; // default
+  };
+
+  var get_user_balance = axios.create({
+    method: 'GET',
+    strictSSL: false,
+  });
+  var user_balance_new = 0;
+  get_user_balance.then(function (response) {
+    // handle success
+    console.log(response);
+    user_balance_new = response.data.user.balance;
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+
+
+  var vue = new Vue({
+    el: '#app',
+    data() {
+      return {
+        headers_user: [
+          {
+            text: 'Value',
+            align: 'left',
+            sortable: false,
+            value: 'value'
+          },
+          {
+            text: 'Name',
+            value: 'user_name'
+          },
+          {
+            text: 'Rating',
+            value: 'rating'
+          },
+          {
+            text: 'Balance',
+            value: 'balance_total'
+          },
+
+
+        ],
+        headers_transactions: [
+          {
+            text: 'Phone Number',
+            align: 'left',
+            sortable: false,
+            value: 'phone_number'
+          },
+          {
+            text: 'Amount',
+            value: 'value'
+          },
+          {
+            text: 'Time',
+            value: 'time'
+          }
+        ],
+        view: 'consumer',
+        value: [
+          423,
+          446,
+          675,
+          510,
+          590,
+          610,
+          760
+        ],
+        users: [
+          {
+            user_name: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+            balance_total: 100,
+            balance_total_new: 10,
+            rating: 'AAA',
+            rating_plus: 120,
+          },
+          {
+            user_name: 'Ranee Carlson',
+            balance_total: 99,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+            rating: "BB",
+          },
+          {
+            user_name: 'Cindy Baker',
+            balance_total: 34,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            rating: "C",
+          },
+          {
+            user_name: 'Ali Connors',
+            balance_total: 49,
+            balance_total_new: user_balance_new -49,
+            rating: "A",
+            rating_plus: 120,
+
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg'
+          }
+        ],
+        trans_history: [
+          {
+            phone_number: '+491577',
+            value: 100,
+            time: '2019-03-03',
+          },
+          {
+            phone_number: "test",
+
+            value: 100,
+            time: '2019-02-03',
+          },
+          {
+            phone_number: '+491577',
+
+            value: 100,
+            time: '2019-01-03',
+          },
+
+        ],
+        rating_history: [
+          {
+            value: 100,
+            time: '2019-03-03',
+          },
+          {
+
+            value: 90,
+            time: '2019-02-03',
+          },
+          {
+
+            value: 80,
+            time: '2019-01-03',
+          },
+          {
+            value: 85,
+            time: '2019-15-03',
+          },
+          {
+
+            value: 30,
+            time: '2019-15-02',
+          },
+
+        ]
+      }
+    },
+    methods: {
+      update_balance: function () {
+      }
+    }
+  });
+
+
+</script>
+</html>
