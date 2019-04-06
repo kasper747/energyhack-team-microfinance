@@ -1,5 +1,5 @@
 <?php
-
+include_once("base.php");
 header("Content-Type:application/json");
 
 if ( $_SERVER["REQUEST_METHOD"]=="GET" ){
@@ -11,7 +11,9 @@ if ( $_SERVER["REQUEST_METHOD"]=="GET" ){
 	$status['message'] = "Database is available.";
 	$status['error'] = false;
 
-    $sql = "SELECT SUM(amount) AS total FROM transactions where targetuser='" . get_default__target_user() . "';";
+	include_once("base.php");
+
+    $sql = "SELECT SUM(amount) AS total FROM transactions where targetuser='" . get_default_target_user() . "';";
 
     //echo($sql);
 
@@ -34,9 +36,7 @@ if ( $_SERVER["REQUEST_METHOD"]=="GET" ){
 
 }
 
-function get_default__target_user(){
-    return "consumer1";
-}
+
 
 response($response);
 
