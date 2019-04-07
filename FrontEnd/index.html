@@ -83,7 +83,7 @@
                                                 <v-list-tile-content>
                                                     {{text[0]}}
                                                 </v-list-tile-content>
-                                                <v-badge overlap big color="red">
+                                                <v-badge overlap big color="green">
                                             <template v-slot:badge v-if="text[2]">
                                                 <span style="font-size: 10px">+{{text[2]}}</span>
                                             </template>
@@ -135,7 +135,7 @@
                                     <td class="text-xs-left">
                                         <v-flex row>
                                             <a :href="props.item.block_link">
-                                                <v-badge right overlap big color="red">
+                                                <v-badge right overlap big color="green">
                                                     <template v-slot:badge v-if="props.item.rating_plus>0">
                                                         <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
                                                     </template>
@@ -198,25 +198,174 @@
                                             <v-layout align-center justify-center column fill-height>
 
                                                 <v-avatar size="120">
-                                                    <img :src="users[0].avatar">
+                                                    <img :src="producer[0].avatar">
                                                 </v-avatar>
-                                                <h2>{{users[0].user_name}}</h2>
+                                                <h2>{{producer[0].user_name}}</h2>
                                             </v-layout>
 
                                         </v-flex>
                                         <v-flex xs5>
                                             <v-list>
                                             <span v-for="text in [
-                    ['Balance: \t', String(users[0].balance_total), users[0].balance_total_new],
-                    ['Credit Score: ', users[0].rating],
-                    ['Month Consumption:', '500' + ' Wh']
+                    ['Credit Score: ', String(users[0].balance_total), Math.round(users[0].balance_total_new/10)],
+                    ['Loans: ', '70k EUR', -users[0].balance_total_new/2],
+                    ['Balance: ', '5k EUR', +users[0].balance_total_new/2],
+                    ['Month Production:', '100' + ' kWh']
                   ]">
 
                                             <v-list-tile>
                                                 <v-list-tile-content>
                                                     {{text[0]}}
                                                 </v-list-tile-content>
-                                                <v-badge overlap big color="red">
+                                                <v-badge overlap big color="green">
+                                            <template v-slot:badge v-if="text[2]">
+                                                <span style="font-size: 10px">{{Math.round(text[2])}}</span>
+                                            </template>
+                                            <v-list-tile-action>
+                                                    {{text[1]}}
+
+                                                </v-list-tile-action>
+                                        </v-badge>
+
+
+                                            </v-list-tile>
+                                                 <v-divider></v-divider>
+                                            </span>                                       </span>
+
+
+                                            </v-list>
+
+
+                                            <span></span>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Customers Overview</h3>
+                            <v-data-table
+                                    :headers="headers_user"
+                                    :items="users"
+                                    class="elevation-1"
+                            >
+                                <template v-slot:items="props">
+                                    <td>
+                                        <v-avatar size="36">
+                                            <img :src="props.item.avatar">
+                                        </v-avatar>
+                                    </td>
+                                    <td>
+                                        {{ props.item.user_name }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+
+                                            {{props.item.avg_consumption}}
+
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+                                            <v-badge right overlap big color="green">
+                                                <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                    <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                                </template>
+                                                <v-btn small color="white darken-1">
+                                                    {{props.item.rating}}
+                                                </v-btn>
+                                            </v-badge>
+                                        </v-flex>
+                                    </td>
+
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+                                            <v-badge right overlap big color="green">
+                                                <template v-slot:badge v-if="props.item.balance_total_new>0">
+                                                    <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
+                                                </template>
+                                                <v-btn small color="white darken-1">
+                                                    {{props.item.balance_total}}
+                                                </v-btn>
+                                            </v-badge>
+                                        </v-flex>
+                                    </td>
+
+                                </template>
+                            </v-data-table>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Rating development</h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
+
+                            >
+                                <v-card-text>
+                                    <v-sheet color="rgba(0, 0, 0, .12)">
+                                        <v-sparkline
+                                                :value="rating_history"
+                                                color="rgba(255, 255, 255, .7)"
+                                                height="100"
+                                                padding="24"
+                                                stroke-linecap="round"
+                                                smooth
+                                        >
+                                            <template v-slot:label="item" v-if="false">
+                                                ${{ item.value }}
+                                            </template>
+                                        </v-sparkline>
+                                    </v-sheet>
+                                </v-card-text>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                    </v-container>
+                    <!--Bank View-->
+                    <v-container v-if="view==='bank'">
+                        <v-container>
+                            <h3>Profile View </h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
+                                    max-width="800"
+                            >
+                                <v-card>
+                                    <v-layout>
+                                        <v-flex xs6>
+                                            <v-layout align-center justify-center column fill-height>
+
+                                                <v-avatar size="120">
+                                                    <img :src="bank[0].avatar">
+                                                </v-avatar>
+                                                <h2>{{bank[0].user_name}}</h2>
+                                            </v-layout>
+
+                                        </v-flex>
+                                        <v-flex xs5>
+                                            <v-list>
+                                                <v-subheader>
+                                                    Investment Portfolio
+                                                </v-subheader>
+                                                <span v-for="text in [
+                    ['Portfolio Value: \t', '15,00 MIO EUR'],
+                    ['Avg. Risk: ', 'BBB+', Math.round(users[0].balance_total_new/100)],
+                    ['Available Funds:', '925,00' + ' TSD EUR',Math.round(users[0].balance_total_new/2)],
+                    ['Defaulted Payments:', '2,30' + 'TSD EUR']
+                  ]">
+
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    {{text[0]}}
+                                                </v-list-tile-content>
+                                                <v-badge big color="green">
                                             <template v-slot:badge v-if="text[2]">
                                                 <span style="font-size: 10px">+{{text[2]}}</span>
                                             </template>
@@ -314,7 +463,7 @@
                                     </td>
                                     <td class="text-xs-left">
                                         <v-flex row>
-                                            <v-badge right overlap big color="red">
+                                            <v-badge right overlap big color="green">
                                                 <template v-slot:badge v-if="props.item.rating_plus>0">
                                                     <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
                                                 </template>
@@ -326,7 +475,7 @@
                                     </td>
                                     <td class="text-xs-left">
                                         <v-flex row>
-                                            <v-badge right overlap big color="red">
+                                            <v-badge right overlap big color="green">
                                                 <template v-slot:badge v-if="props.item.balance_total_new>0">
                                                     <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
                                                 </template>
@@ -366,7 +515,7 @@
                                     <td class="text-xs-left">
                                         <v-flex row>
                                             <a :href="props.item.block_link">
-                                                <v-badge right overlap big color="red">
+                                                <v-badge right overlap big color="green">
                                                     <template v-slot:badge v-if="props.item.rating_plus>0">
                                                         <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
                                                     </template>
@@ -431,7 +580,7 @@
       return {
         headers_user: [
           {
-            text: 'Value',
+            text: '',
             align: 'left',
             sortable: false,
             value: 'value'
@@ -439,6 +588,10 @@
           {
             text: 'Name',
             value: 'user_name'
+          },
+          {
+            text: 'avg consumption [Wh/month]',
+            value: 'avg_consumption'
           },
           {
             text: 'Rating',
@@ -487,7 +640,7 @@
             value: 'block_link'
           }
         ],
-        view: 'consumer',
+        view: 'bank',
         value: [
           423,
           446,
@@ -504,9 +657,12 @@
             balance_total_new: this.user_balance_new - 49,
             rating: "A",
             avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-            producer: 1
+            producer: 1,
+            avg_consumption: 100,
           },
           {
+            avg_consumption: 4000,
+
             user_name: 'Jason Oner',
             avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
             balance_total: 100,
@@ -514,6 +670,7 @@
             producer: 1
           },
           {
+            avg_consumption: 56,
             user_name: 'Ranee Carlson',
             balance_total: 99,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
@@ -521,6 +678,8 @@
             producer: 1
           },
           {
+            avg_consumption: 120,
+
             user_name: 'Cindy Baker',
             balance_total: 34,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
@@ -536,8 +695,19 @@
             balance_total: 99,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             rating: "BB",
-            id: 1
+            id: 1,
+            avg_production:100
           },
+          {
+            user_name: 'Cindy Baker',
+            balance_total: 34,
+            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+            rating: "C",
+            avg_production:100,
+            id: 2,
+          }
+        ],
+        bank: [
           {
             user_name: 'Cindy Baker',
             balance_total: 34,
