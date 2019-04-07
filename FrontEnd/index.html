@@ -144,6 +144,8 @@
                         <h3>Messages Overview</h3>
                         <v-data-table
                                 :headers="headers_messages"
+                                rowsPerPage=15
+
                                 :items="messages"
                                 class="elevation-1"
                         >
@@ -309,28 +311,28 @@
             balance_total_new: this.user_balance_new - 49,
             rating: "A",
             avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-            producer:1
+            producer: 1
           },
           {
             user_name: 'Jason Oner',
             avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
             balance_total: 100,
             rating: 'AAA',
-            producer:1
+            producer: 1
           },
           {
             user_name: 'Ranee Carlson',
             balance_total: 99,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             rating: "BB",
-            producer:1
+            producer: 1
           },
           {
             user_name: 'Cindy Baker',
             balance_total: 34,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             rating: "C",
-            producer:1
+            producer: 1
           }
         ],
         producer: [
@@ -339,14 +341,14 @@
             balance_total: 99,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
             rating: "BB",
-            id:1
+            id: 1
           },
           {
             user_name: 'Cindy Baker',
             balance_total: 34,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
             rating: "C",
-            id:2,
+            id: 2,
           }
         ],
         trans_history: [
