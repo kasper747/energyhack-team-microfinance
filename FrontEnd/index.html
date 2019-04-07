@@ -31,166 +31,359 @@
     <v-app>
         <v-layout row>
             <v-flex xs12 sm10 offset-sm1>
+                <v-toolbar color="teal" dark>
+                    <v-toolbar-side-icon></v-toolbar-side-icon>
+
+                    <v-toolbar-title class="text-xs-center">{{view}}'s view</v-toolbar-title>
+
+                    <v-spacer></v-spacer>
+
+
+                    <v-toolbar-items>
+                        <v-btn flat @click="view='consumer'">Consumer</v-btn>
+                        <v-btn flat @click="view='producer'">Producer</v-btn>
+                        <v-btn flat @click="view='bank'">Bank</v-btn>
+                    </v-toolbar-items>
+                    <v-btn icon>
+                        <v-icon>search</v-icon>
+                    </v-btn>
+                </v-toolbar>
                 <v-card>
-                    <v-toolbar color="teal" dark>
-                        <v-toolbar-side-icon></v-toolbar-side-icon>
 
-                        <v-toolbar-title class="text-xs-center">{{view}}'s view</v-toolbar-title>
+                    <v-container v-if="view==='consumer'">
+                        <v-container>
+                            <h3>Profile View </h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
+                                    max-width="800"
+                            >
+                                <v-card>
+                                    <v-layout>
+                                        <v-flex xs6>
+                                            <v-layout align-center justify-center column fill-height>
 
-                        <v-spacer></v-spacer>
+                                                <v-avatar size="120">
+                                                    <img :src="users[0].avatar">
+                                                </v-avatar>
+                                                <h2>{{users[0].user_name}}</h2>
+                                            </v-layout>
+
+                                        </v-flex>
+                                        <v-flex xs5>
+                                            <v-list>
+                                            <span v-for="text in [
+                    ['Balance: \t', String(users[0].balance_total), users[0].balance_total_new],
+                    ['Credit Score: ', users[0].rating],
+                    ['Month Consumption:', '500' + ' Wh']
+                  ]">
+
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    {{text[0]}}
+                                                </v-list-tile-content>
+                                                <v-badge overlap big color="red">
+                                            <template v-slot:badge v-if="text[2]">
+                                                <span style="font-size: 10px">+{{text[2]}}</span>
+                                            </template>
+                                            <v-list-tile-action>
+                                                    {{text[1]}}
+
+                                                </v-list-tile-action>
+                                        </v-badge>
 
 
-                        <v-toolbar-items class="hidden-sm-and-down">
-                            <v-btn flat @click="view='consumer'">Consumer</v-btn>
-                            <v-btn flat @click="view='producer'">Producer</v-btn>
-                            <v-btn flat @click="view='bank'">Bank</v-btn>
-                        </v-toolbar-items>
-                        <v-btn icon>
-                            <v-icon>search</v-icon>
-                        </v-btn>
-                    </v-toolbar>
-                    <v-conainer v-if="view==='consumer'">
-                        <v-card
-                                class="mx-auto text-xs-center"
-                                color="green"
-                                dark
-                                max-width="800"
-                        >
-                            <v-sheet color="rgba(0, 0, 0, .12)">
-                                <v-sparkline
-                                        :value="rating_history"
-                                        color="rgba(255, 255, 255, .7)"
-                                        height="100"
-                                        padding="24"
-                                        smooth
-                                        auto-draw-duration="2000"
-                                >
-                                    <template v-slot:label="rating_history" v-if="false">
-                                        ${{ rating_history.value }}
-                                    </template>
-                                </v-sparkline>
-                            </v-sheet>
+                                            </v-list-tile>
+                                                 <v-divider></v-divider>
+                                            </span>                                       </span>
 
-                            <v-card-text>
-                                <div class="display-1 font-weight-thin">Rating History</div>
-                            </v-card-text>
 
+                                            </v-list>
+
+
+                                            <span></span>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card>
+
+
+                            </v-card>
                             <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Messages Overview</h3>
+                            <v-data-table
+                                    :headers="headers_messages"
+                                    rowsPerPage=15
+
+                                    :items="messages"
+                                    class="elevation-1"
+                            >
+                                <template v-slot:items="props">
+
+                                    <td class="text-xs-left">
+                                        {{ props.item.id }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{ props.item.message }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{ props.item.fromNumber }}
+                                    </td>
+
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+                                            <a :href="props.item.block_link">
+                                                <v-badge right overlap big color="red">
+                                                    <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                        <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                                    </template>
+                                                    <v-btn @click="props.item.block_link" small color="white darken-1">
+                                                        open block in chain
+                                                    </v-btn>
+                                                </v-badge>
+                                            </a>
+                                        </v-flex>
+                                    </td>
 
 
-                        </v-card>
-                        <h3>Transaction History</h3>
-                        <v-data-table
-                                :headers="headers_transactions"
-                                :items="trans_history"
-                                class="elevation-1"
-                        >
-                            <template v-slot:items="props">
+                                </template>
+                            </v-data-table>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Rating development</h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
 
-                                <td>
-                                    {{ props.item.phone_number }}
-                                </td>
-                                <td class="text-xs-left">
-                                    {{props.item.value}}
-                                </td>
-                                <td class="text-xs-left">
-                                    {{props.item.time}}
-                                </td>
-                            </template>
-                        </v-data-table>
-                        <h3>Consumers Overview</h3>
-
-                        <v-data-table
-                                :headers="headers_user"
-                                :items="users"
-                                class="elevation-1"
-                        >
-                            <template v-slot:items="props">
-                                <td>
-                                    <v-avatar size="36">
-                                        <img :src="props.item.avatar">
-                                    </v-avatar>
-                                </td>
-                                <td>
-                                    {{ props.item.user_name }}
-                                </td>
-                                <td class="text-xs-left">
-                                    <v-flex row>
-                                        <v-badge right overlap big color="red">
-                                            <template v-slot:badge v-if="props.item.rating_plus>0">
-                                                <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                            >
+                                <v-card-text>
+                                    <v-sheet color="rgba(0, 0, 0, .12)">
+                                        <v-sparkline
+                                                :value="rating_history"
+                                                color="rgba(255, 255, 255, .7)"
+                                                height="100"
+                                                padding="24"
+                                                stroke-linecap="round"
+                                                smooth
+                                        >
+                                            <template v-slot:label="item" v-if="false">
+                                                ${{ item.value }}
                                             </template>
-                                            <v-btn small color="white darken-1">
-                                                {{props.item.rating}}
-                                            </v-btn>
-                                        </v-badge>
-                                    </v-flex>
-                                </td>
-                                <td class="text-xs-left">
-                                    <v-flex row>
-                                        <v-badge right overlap big color="red">
-                                            <template v-slot:badge v-if="props.item.balance_total_new>0">
-                                                <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
+                                        </v-sparkline>
+                                    </v-sheet>
+                                </v-card-text>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                    </v-container>
+                    <!--Producer View-->
+                    <v-container v-if="view==='producer'">
+                        <v-container>
+                            <h3>Profile View </h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
+                                    max-width="800"
+                            >
+                                <v-card>
+                                    <v-layout>
+                                        <v-flex xs6>
+                                            <v-layout align-center justify-center column fill-height>
+
+                                                <v-avatar size="120">
+                                                    <img :src="users[0].avatar">
+                                                </v-avatar>
+                                                <h2>{{users[0].user_name}}</h2>
+                                            </v-layout>
+
+                                        </v-flex>
+                                        <v-flex xs5>
+                                            <v-list>
+                                            <span v-for="text in [
+                    ['Balance: \t', String(users[0].balance_total), users[0].balance_total_new],
+                    ['Credit Score: ', users[0].rating],
+                    ['Month Consumption:', '500' + ' Wh']
+                  ]">
+
+                                            <v-list-tile>
+                                                <v-list-tile-content>
+                                                    {{text[0]}}
+                                                </v-list-tile-content>
+                                                <v-badge overlap big color="red">
+                                            <template v-slot:badge v-if="text[2]">
+                                                <span style="font-size: 10px">+{{text[2]}}</span>
                                             </template>
-                                            <v-btn small color="white darken-1">
-                                                {{props.item.balance_total}}
-                                            </v-btn>
+                                            <v-list-tile-action>
+                                                    {{text[1]}}
+
+                                                </v-list-tile-action>
                                         </v-badge>
-                                    </v-flex>
-                                </td>
 
-                            </template>
-                        </v-data-table>
-                        <h3>Messages Overview</h3>
-                        <v-data-table
-                                :headers="headers_messages"
-                                rowsPerPage=15
 
-                                :items="messages"
-                                class="elevation-1"
-                        >
-                            <template v-slot:items="props">
+                                            </v-list-tile>
+                                                 <v-divider></v-divider>
+                                            </span>                                       </span>
 
-                                <td class="text-xs-left">
-                                    {{ props.item.id }}
-                                </td>
-                                <td class="text-xs-left">
-                                    {{ props.item.message }}
-                                </td>
-                                <td class="text-xs-left">
-                                    {{ props.item.fromNumber }}
-                                </td>
 
-                                <td class="text-xs-left">
-                                    <v-flex row>
-                                        <a :href="props.item.block_link">
+                                            </v-list>
+
+
+                                            <span></span>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Rating development</h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="green"
+                                    dark
+
+                            >
+                                <v-card-text>
+                                    <v-sheet color="rgba(0, 0, 0, .12)">
+                                        <v-sparkline
+                                                :value="rating_history"
+                                                color="rgba(255, 255, 255, .7)"
+                                                height="100"
+                                                padding="24"
+                                                stroke-linecap="round"
+                                                smooth
+                                        >
+                                            <template v-slot:label="item" v-if="false">
+                                                ${{ item.value }}
+                                            </template>
+                                        </v-sparkline>
+                                    </v-sheet>
+                                </v-card-text>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Transaction History</h3>
+                            <v-data-table
+                                    :headers="headers_transactions"
+                                    :items="trans_history"
+                                    class="elevation-1"
+                            >
+                                <template v-slot:items="props">
+
+                                    <td>
+                                        {{ props.item.phone_number }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{props.item.value}}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{props.item.time}}
+                                    </td>
+                                </template>
+                            </v-data-table>
+                            <v-divider></v-divider>
+                        </v-container>
+
+                        <v-container>
+                            <h3>Customers Overview</h3>
+                            <v-data-table
+                                    :headers="headers_user"
+                                    :items="users"
+                                    class="elevation-1"
+                            >
+                                <template v-slot:items="props">
+                                    <td>
+                                        <v-avatar size="36">
+                                            <img :src="props.item.avatar">
+                                        </v-avatar>
+                                    </td>
+                                    <td>
+                                        {{ props.item.user_name }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <v-flex row>
                                             <v-badge right overlap big color="red">
                                                 <template v-slot:badge v-if="props.item.rating_plus>0">
                                                     <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
                                                 </template>
-                                                <v-btn @click="props.item.block_link" small color="white darken-1">
-                                                    open block in chain
+                                                <v-btn small color="white darken-1">
+                                                    {{props.item.rating}}
                                                 </v-btn>
                                             </v-badge>
-                                        </a>
-                                    </v-flex>
-                                </td>
+                                        </v-flex>
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+                                            <v-badge right overlap big color="red">
+                                                <template v-slot:badge v-if="props.item.balance_total_new>0">
+                                                    <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
+                                                </template>
+                                                <v-btn small color="white darken-1">
+                                                    {{props.item.balance_total}}
+                                                </v-btn>
+                                            </v-badge>
+                                        </v-flex>
+                                    </td>
+
+                                </template>
+                            </v-data-table>
+                            <v-divider></v-divider>
+
+                        </v-container>
+                        <v-container>
+                            <h3>Messages Overview</h3>
+                            <v-data-table
+                                    :headers="headers_messages"
+                                    rowsPerPage=15
+
+                                    :items="messages"
+                                    class="elevation-1"
+                            >
+                                <template v-slot:items="props">
+
+                                    <td class="text-xs-left">
+                                        {{ props.item.id }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{ props.item.message }}
+                                    </td>
+                                    <td class="text-xs-left">
+                                        {{ props.item.fromNumber }}
+                                    </td>
+
+                                    <td class="text-xs-left">
+                                        <v-flex row>
+                                            <a :href="props.item.block_link">
+                                                <v-badge right overlap big color="red">
+                                                    <template v-slot:badge v-if="props.item.rating_plus>0">
+                                                        <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                                    </template>
+                                                    <v-btn @click="props.item.block_link" small color="white darken-1">
+                                                        open block in chain
+                                                    </v-btn>
+                                                </v-badge>
+                                            </a>
+                                        </v-flex>
+                                    </td>
 
 
-                            </template>
-                        </v-data-table>
-
-
-                        <v-divider></v-divider>
-                    </v-conainer>
-                    <!--Producer View-->
-                    <v-conainer v-if="view==='producer'">
-
-
-                    </v-conainer>
-                    <v-conainer v-if="view==='bank'">
-
-                    </v-conainer>
+                                </template>
+                            </v-data-table>
+                            <v-divider></v-divider>
+                        </v-container>
+                    </v-container>
 
 
                 </v-card>
@@ -335,6 +528,8 @@
             producer: 1
           }
         ],
+
+
         producer: [
           {
             user_name: 'Ranee Carlson',
