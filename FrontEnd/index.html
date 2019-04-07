@@ -29,7 +29,7 @@
 <!-- Page Wrapper -->
 <div id="app">
     <v-app>
-        <v-layout row>
+        <v-layout row style="display: none" :style="'display:inline'">
             <v-flex xs12 sm10 offset-sm1>
                 <v-toolbar color="teal" dark>
                     <v-toolbar-side-icon></v-toolbar-side-icon>
@@ -75,8 +75,8 @@
                                             <v-list>
                                             <span v-for="text in [
                     ['Balance: \t', String(users[0].balance_total), users[0].balance_total_new],
-                    ['Credit Score: ', users[0].rating],
-                    ['Month Consumption:', '500' + ' Wh']
+                    ['Credit Score: ', Math.round(users[0].rating+users[0].balance_total_new/10),Math.round(users[0].balance_total_new/10)],
+                    ['Month Consumption:', users[0].balance_total + ' Wh']
                   ]">
 
                                             <v-list-tile>
@@ -106,6 +106,32 @@
                                         </v-flex>
                                     </v-layout>
                                 </v-card>
+
+
+                            </v-card>
+                            <v-divider></v-divider>
+                        </v-container>
+                        <v-container>
+                            <h3>Topup View </h3>
+                            <v-card
+                                    class="mx-auto text-xs-center"
+                                    color="yellow"
+
+                                    max-width="800"
+                            >
+                                <v-card-title>
+                                    <v-flex sx12>
+                                        Message:
+                                        <v-card>payment-10eur-kojo</v-card>
+                                    </v-flex>
+                                    <v-flex sx12>
+                                        To phone number
+
+                                        <v-card>0152 29207524</v-card>
+
+                                    </v-flex>
+
+                                </v-card-title>
 
 
                             </v-card>
@@ -153,7 +179,7 @@
                             <v-divider></v-divider>
                         </v-container>
                         <v-container>
-                            <h3>Rating development</h3>
+                            <h3>Credit Score development</h3>
                             <v-card
                                     class="mx-auto text-xs-center"
                                     color="green"
@@ -207,17 +233,17 @@
                                         <v-flex xs5>
                                             <v-list>
                                             <span v-for="text in [
-                    ['Credit Score: ', String(users[0].balance_total), Math.round(users[0].balance_total_new/10)],
-                    ['Loans: ', '70k EUR', -users[0].balance_total_new/2],
-                    ['Balance: ', '5k EUR', +users[0].balance_total_new/2],
-                    ['Month Production:', '100' + ' kWh']
+                    ['Credit Score: ', String(producer[0].rating), Math.round(users[0].balance_total_new/10)],
+                    ['Loans: ', producer[0].loans+' TSD EUR', -users[0].balance_total_new/2],
+                    ['Balance: ', '5 TSD EUR', +users[0].balance_total_new/2],
+                    ['Month Production:', producer[0].avg_production + ' kWh']
                   ]">
 
                                             <v-list-tile>
                                                 <v-list-tile-content>
                                                     {{text[0]}}
                                                 </v-list-tile-content>
-                                                <v-badge overlap big color="green">
+                                                <v-badge big color="green">
                                             <template v-slot:badge v-if="text[2]">
                                                 <span style="font-size: 10px">{{Math.round(text[2])}}</span>
                                             </template>
@@ -262,16 +288,16 @@
                                         {{ props.item.user_name }}
                                     </td>
                                     <td class="text-xs-left">
-                                        <v-flex row>
 
-                                            {{props.item.avg_consumption}}
+
+                                        {{props.item.avg_consumption}}
 
                                     </td>
                                     <td class="text-xs-left">
                                         <v-flex row>
                                             <v-badge right overlap big color="green">
-                                                <template v-slot:badge v-if="props.item.rating_plus>0">
-                                                    <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                                <template v-slot:badge v-if="props.item.balance_total_new>0">
+                                                    <span style="font-size: 10px">+{{Math.round(props.item.balance_total_new/10)}}</span>
                                                 </template>
                                                 <v-btn small color="white darken-1">
                                                     {{props.item.rating}}
@@ -298,7 +324,7 @@
                             <v-divider></v-divider>
                         </v-container>
                         <v-container>
-                            <h3>Rating development</h3>
+                            <h3>Credit Score development</h3>
                             <v-card
                                     class="mx-auto text-xs-center"
                                     color="green"
@@ -358,7 +384,7 @@
                     ['Portfolio Value: \t', '15,00 MIO EUR'],
                     ['Avg. Risk: ', 'BBB+', Math.round(users[0].balance_total_new/100)],
                     ['Available Funds:', '925,00' + ' TSD EUR',Math.round(users[0].balance_total_new/2)],
-                    ['Defaulted Payments:', '2,30' + 'TSD EUR']
+                    ['Defaulted Payments:', '2,30' + ' TSD EUR']
                   ]">
 
                                             <v-list-tile>
@@ -393,63 +419,13 @@
                             </v-card>
                             <v-divider></v-divider>
                         </v-container>
+
+
                         <v-container>
-                            <h3>Rating development</h3>
-                            <v-card
-                                    class="mx-auto text-xs-center"
-                                    color="green"
-                                    dark
-
-                            >
-                                <v-card-text>
-                                    <v-sheet color="rgba(0, 0, 0, .12)">
-                                        <v-sparkline
-                                                :value="rating_history"
-                                                color="rgba(255, 255, 255, .7)"
-                                                height="100"
-                                                padding="24"
-                                                stroke-linecap="round"
-                                                smooth
-                                        >
-                                            <template v-slot:label="item" v-if="false">
-                                                ${{ item.value }}
-                                            </template>
-                                        </v-sparkline>
-                                    </v-sheet>
-                                </v-card-text>
-
-
-                            </v-card>
-                            <v-divider></v-divider>
-                        </v-container>
-                        <v-container>
-                            <h3>Transaction History</h3>
+                            <h3>Producer Overview</h3>
                             <v-data-table
-                                    :headers="headers_transactions"
-                                    :items="trans_history"
-                                    class="elevation-1"
-                            >
-                                <template v-slot:items="props">
-
-                                    <td>
-                                        {{ props.item.phone_number }}
-                                    </td>
-                                    <td class="text-xs-left">
-                                        {{props.item.value}}
-                                    </td>
-                                    <td class="text-xs-left">
-                                        {{props.item.time}}
-                                    </td>
-                                </template>
-                            </v-data-table>
-                            <v-divider></v-divider>
-                        </v-container>
-
-                        <v-container>
-                            <h3>Customers Overview</h3>
-                            <v-data-table
-                                    :headers="headers_user"
-                                    :items="users"
+                                    :headers="headers_producer"
+                                    :items="producer"
                                     class="elevation-1"
                             >
                                 <template v-slot:items="props">
@@ -462,68 +438,33 @@
                                         {{ props.item.user_name }}
                                     </td>
                                     <td class="text-xs-left">
+
+                                        {{props.item.loans}} TSD EUR
+
+
+                                    </td>
+                                    <td class="text-xs-left">
+
+                                        {{props.item.avg_production}} Wh/m
+
+
+                                    </td>
+                                    <td class="text-xs-left">
+                                        <span style="color:green">
+                                             {{props.item.avg_production_soll}} Wh/m
+
+
+                                        </span>
+
+                                    </td>
+                                    <td class="text-xs-left">
                                         <v-flex row>
-                                            <v-badge right overlap big color="green">
-                                                <template v-slot:badge v-if="props.item.rating_plus>0">
-                                                    <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
+                                            <v-badge right  big color="green">
+                                                <template v-slot:badge v-if="props.item.user_name==='Solomon Bafour'">
+                                                    <span style="font-size: 10px">+{{Math.round(users[0].balance_total_new/10)}}</span>
                                                 </template>
-                                                <v-btn small color="white darken-1">
-                                                    {{props.item.rating}}
-                                                </v-btn>
+                                                {{props.item.rating }}
                                             </v-badge>
-                                        </v-flex>
-                                    </td>
-                                    <td class="text-xs-left">
-                                        <v-flex row>
-                                            <v-badge right overlap big color="green">
-                                                <template v-slot:badge v-if="props.item.balance_total_new>0">
-                                                    <span style="font-size: 10px">+{{props.item.balance_total_new}}</span>
-                                                </template>
-                                                <v-btn small color="white darken-1">
-                                                    {{props.item.balance_total}}
-                                                </v-btn>
-                                            </v-badge>
-                                        </v-flex>
-                                    </td>
-
-                                </template>
-                            </v-data-table>
-                            <v-divider></v-divider>
-
-                        </v-container>
-                        <v-container>
-                            <h3>Messages Overview</h3>
-                            <v-data-table
-                                    :headers="headers_messages"
-                                    rowsPerPage=15
-
-                                    :items="messages"
-                                    class="elevation-1"
-                            >
-                                <template v-slot:items="props">
-
-                                    <td class="text-xs-left">
-                                        {{ props.item.id }}
-                                    </td>
-                                    <td class="text-xs-left">
-                                        {{ props.item.message }}
-                                    </td>
-                                    <td class="text-xs-left">
-                                        {{ props.item.fromNumber }}
-                                    </td>
-
-                                    <td class="text-xs-left">
-                                        <v-flex row>
-                                            <a :href="props.item.block_link">
-                                                <v-badge right overlap big color="green">
-                                                    <template v-slot:badge v-if="props.item.rating_plus>0">
-                                                        <span style="font-size: 10px">+{{props.item.rating_plus}}</span>
-                                                    </template>
-                                                    <v-btn @click="props.item.block_link" small color="white darken-1">
-                                                        open block in chain
-                                                    </v-btn>
-                                                </v-badge>
-                                            </a>
                                         </v-flex>
                                     </td>
 
@@ -531,6 +472,7 @@
                                 </template>
                             </v-data-table>
                             <v-divider></v-divider>
+
                         </v-container>
                     </v-container>
 
@@ -581,8 +523,6 @@
         headers_user: [
           {
             text: '',
-            align: 'left',
-            sortable: false,
             value: 'value'
           },
           {
@@ -594,12 +534,42 @@
             value: 'avg_consumption'
           },
           {
-            text: 'Rating',
+            text: 'Credit Score',
             value: 'rating'
           },
           {
             text: 'Balance',
             value: 'balance_total'
+          },
+
+
+        ],
+        headers_producer: [
+          {
+            text: '',
+            align: 'left',
+            sortable: false,
+            value: 'value'
+          },
+          {
+            text: 'Name',
+            value: 'user_name'
+          },
+          {
+            text: 'Loans',
+            value: 'avg_production'
+          },
+          {
+            text: 'Production',
+            value: 'avg_production'
+          },
+          {
+            text: 'Planed Production',
+            value: 'avg_production'
+          },
+          {
+            text: 'Credit Score',
+            value: 'rating'
           },
 
 
@@ -624,7 +594,6 @@
           {
             text: 'ID',
             align: 'left',
-            sortable: false,
             value: 'id'
           },
           {
@@ -640,7 +609,7 @@
             value: 'block_link'
           }
         ],
-        view: 'bank',
+        view: 'consumer',
         value: [
           423,
           446,
@@ -653,12 +622,12 @@
         users: [
           {
             user_name: 'Kojo Sarfo',
-            balance_total: 49,
+            balance_total: 1400,
             balance_total_new: this.user_balance_new - 49,
-            rating: "A",
-            avatar: 'https://www.bushtheatre.co.uk/wp-content/uploads/2017/10/AdelajaDamolaSquare.jpg',
+            rating: 93,
+            avatar: './img/woman_girl.jpg',
             producer: 1,
-            avg_consumption: 100,
+            avg_consumption: 500,
           },
           {
             avg_consumption: 4000,
@@ -666,7 +635,7 @@
             user_name: 'Efia Hussein',
             avatar: 'https://insightcced.org/wp-content/uploads/2018/05/Nwamaka-square-3.jpg',
             balance_total: 100,
-            rating: 'AAA',
+            rating: 345,
             producer: 1
           },
           {
@@ -675,7 +644,7 @@
             user_name: 'Kofi Darko',
             balance_total: 99,
             avatar: 'https://www.centralsquaretheater.org/wp-content/uploads/2018/12/Bobby-copy-377x367.jpg',
-            rating: "BB",
+            rating: 4356,
             producer: 1
           },
           {
@@ -684,7 +653,7 @@
             user_name: 'Adebayo olusegun',
             balance_total: 34,
             avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-T96CtkTHj_7c-VSqXKjRFteiE1S9EkhKJYDlAj9i6eu682OtuQ',
-            rating: "C",
+            rating: 984,
             producer: 1
           }
         ],
@@ -693,18 +662,23 @@
         producer: [
           {
             user_name: 'Solomon Bafour',
-            balance_total: 99,
             avatar: 'https://randburgsun.co.za/wp-content/uploads/sites/9/2018/05/PeterPaulNgwenya-395x400.jpg',
-            rating: "BB",
+            loans: 70,
+            rating: 45006,
             id: 1,
-            avg_production:100
+            avg_production: 4500,
+            avg_production_soll: 4600,
+
           },
           {
             user_name: 'Cindy Appiah',
+            loans: 93,
             balance_total: 34,
             avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-            rating: "C",
-            avg_production:100,
+            rating: 145006,
+            avg_production: 1000,
+            avg_production_soll: 1200,
+
             id: 2,
           }
         ],
@@ -739,28 +713,34 @@
         ],
         rating_history: [
           {
-            value: 100,
-            time: '2019-03-03',
+
+            value: 10,
+            time: '2019-01-03',
           },
           {
 
-            value: 90,
+            value: 45,
+            time: '2019-01-19',
+          },
+          {
+            value: 63,
             time: '2019-02-03',
           },
           {
 
-            value: 80,
-            time: '2019-01-03',
-          },
-          {
             value: 85,
-            time: '2019-15-03',
+            time: '2019-02-15',
+          },
+
+          {
+            value: 93,
+            time: '2019-3-03',
           },
           {
-
-            value: 30,
-            time: '2019-15-02',
+            value: 100,
+            time: '2019-3-03',
           },
+
 
         ],
         messages: [],
