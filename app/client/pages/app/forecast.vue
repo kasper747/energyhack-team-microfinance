@@ -3,8 +3,11 @@
 <template>
     <v-app>
         <v-sheet>
-            <v-btn @click="fetch_data">
-                Get data
+            <v-btn :disabled="loading" @click="parse_data(hist_prod)">
+                Use Cashed Data
+            </v-btn>
+            <v-btn :disabled="loading" @click="get_prod_forecast()">
+                Request new data
             </v-btn>
             <BarChart
                     :data_prod="data_prod"
@@ -19,6 +22,21 @@
 
 <script>
   import BarChart from '~/components/bar-chart'
+  import axios from "axios";
+
+  var api_url_prod_forecast = 'https://api.forecast.solar/estimate/54.9/25.3/37/0/1';
+
+
+  axios.defaults.headers.post = {
+    'Access-Control-Allow-Origin': "*",
+    'Access-Control-Allow-Credentials': 'true',
+    'Content-Type': 'application/json',
+  };
+  axios.defaults.method = 'get';
+  var api_prod_forecast = axios.create({
+    url: api_url_prod_forecast,
+  });
+
 
   export default {
     name: "forecast",
@@ -33,7 +51,8 @@
         data_load: [],
         today: 16,
         labels: [],
-        prod: {
+        prod: {},
+        hist_prod: {
           "2019-06-15 04:32:00": 0,
           "2019-06-15 04:54:00": 2,
           "2019-06-15 05:15:00": 12,
@@ -75,11 +94,25 @@
           "2019-06-16 21:00:00": 9,
           "2019-06-16 21:33:00": 1,
           "2019-06-16 22:06:00": 0
-        }
+        },
+        loading: false,
       }
     },
     methods: {
-      fetch_data: function () {
+      get_prod_forecast: function () {
+        this.loading = true;
+        api_prod_forecast(
+        )
+            .then(response => {
+              console.log('Fetching');
+              this.parse_data(response.data.result.watts);
+              // this.prod = response.data.result.watts;
+              this.loading = false;
+              console.log(response.data.result.watts);
+
+            });
+      },
+      parse_data: function (prod_data) {
         this.data_prod = [];
         this.data_load = [];
         this.labels = [];
@@ -90,15 +123,15 @@
           } else {
             str = "0" + i.toString();
           }
-          let key = "2019-06-15 " + str + ":00:00";
-          if (this.prod.hasOwnProperty(key)) {
-            this.data_prod.push(this.prod[key]);
-            this.data_load.push(this.prod[key]);
-            this.labels.push("2019-06-15 " + str);
+          let key = "2019-06-16 " + str + ":00:00";
+          if (prod_data.hasOwnProperty(key)) {
+            this.data_prod.push(prod_data[key]);
+            this.data_load.push(prod_data[key]);
+            this.labels.push("2019-06-16 " + str);
           } else {
             this.data_prod.push(0);
             this.data_load.push(0);
-            this.labels.push("2019-06-15 " + str);
+            this.labels.push("2019-06-16 " + str);
           }
         }
         ;
