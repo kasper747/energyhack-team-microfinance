@@ -58,10 +58,7 @@ module.exports = {
         href:
           "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
       },
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css"
-      },
+
       {
         rel: "stylesheet",
         href: "https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -69,6 +66,10 @@ module.exports = {
       {
         rel: "stylesheet",
         href: "https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+      },
+      {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css"
       }
     ]
   },
