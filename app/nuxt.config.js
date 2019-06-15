@@ -74,7 +74,7 @@ module.exports = {
   },
   build: {
     transpile: ["vuetify/lib"],
-    vendor: ["axios", "vuetify", "leaflet","chartjs-web-components"],
+    vendor: ["axios", "vuetify", "leaflet"],
     publicPath: `/${require("./secrets.json").NODE_ENV}/_nuxt/`
   },
   srcDir: "client/",

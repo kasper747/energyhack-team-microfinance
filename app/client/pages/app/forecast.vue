@@ -1,47 +1,21 @@
 <template>
-    <v-app>
-        <line-chart></line-chart>
-    </v-app>
+
+    <BarChart :data="[40, 39, 10, 40, 39, 80, 40]"
+              :labels="['January', 'February', 'March', 'April', 'May', 'June', 'July']"
+    />
 </template>
 
 <script>
-  import Vue from "vue";
-
-  if (process.client) {
-    Vue.component('line-chart', {
-      extends: VueChartJs.Line,
-      mounted() {
-        this.renderChart({
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [40, 39, 10, 40, 39, 80, 40]
-            }
-          ]
-        }, {responsive: true, maintainAspectRatio: false})
-      }
-
-    })
-
-    var vm = new Vue({
-      el: '.app',
-      data: {
-        message: 'Hello World'
-      }
-    });
-  }
+  import BarChart from '~/components/bar-chart'
 
   export default {
     name: "forecast",
+
+    components: {
+      BarChart,
+    },
     data() {
-      return {
-        aches: {
-          'consumption': [1, 2, 3,],
-          'production': [0, 1, 2,],
-        }
-      }
+      return {}
     }
     ,
   }
