@@ -30,9 +30,9 @@
 
 
                             <v-btn :active="toggle_exclusive===2" @click="toggle_exclusive=2" flat color="red"
-                                   to="/app/map">
+                                   to="/app/msg">
                                 <div :style="toggle_exclusive===2 ? 'text-decoration: underline' :''">
-                                    Map
+                                    Messages
                                 </div>
                                 <v-icon>my_location</v-icon>
                             </v-btn>
