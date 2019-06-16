@@ -2,40 +2,37 @@
 
 <template>
     <v-app>
-
-
-        <v-sheet>
-            <v-layout>
-            <v-text-field
-                    v-model="lng"
-                    label="Longitude"
-                    required
-            ></v-text-field>
-            <v-text-field
-                    v-model="lat"
-                    label="Latitude"
-                    required
-            ></v-text-field>
-        </v-layout>
-            <v-btn :disabled="loading" @click="parse_data(hist_prod)">
-                Use Cashed Data
-            </v-btn>
-            <v-btn :disabled="loading" @click="get_prod_forecast()">
-                Request new data
-            </v-btn>
-            <v-btn :disabled="loading" @click="send_message()">
-                Request load shift
-            </v-btn>
-            <v-btn :disabled="loading" @click="get_weather_forecast()">
-                Load Weather
-            </v-btn>
-            <BarChart
-                    :data_prod="data_prod"
-                    :data_prod_weather="data_prod_weather"
-                    :data_load="data_load"
-                    :labels="labels"
-            />
-        </v-sheet>
+        <v-container>
+            <v-sheet>
+                <v-layout>
+                    <v-text-field
+                            v-model="lng"
+                            label="Longitude"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="lat"
+                            label="Latitude"
+                            required
+                    ></v-text-field>
+                </v-layout>
+                <v-btn :disabled="loading" @click="parse_data(hist_prod)">
+                    Clear-Sky-Prod (cashed)
+                </v-btn>
+                <v-btn :disabled="loading" @click="get_prod_forecast()">
+                    Clear-Sky-Prod
+                </v-btn>
+                <v-btn :disabled="loading" @click="get_weather_forecast()">
+                    Real-Weather Prod
+                </v-btn>
+                <BarChart
+                        :data_prod="data_prod"
+                        :data_prod_weather="data_prod_weather"
+                        :data_load="data_load"
+                        :labels="labels"
+                />
+            </v-sheet>
+        </v-container>
     </v-app>
 
 

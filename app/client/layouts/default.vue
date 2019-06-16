@@ -23,7 +23,7 @@
                             <v-btn  :active="toggle_exclusive===1" @click="toggle_exclusive=1" flat color="red"
                                    to="/app/assets">
                                 <div :style="toggle_exclusive===1 ? 'text-decoration: underline' :''">
-                                    Assets
+                                    Solar Panels
                                 </div>
                                 <v-icon>public</v-icon>
                             </v-btn>
