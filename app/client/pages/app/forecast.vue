@@ -17,7 +17,7 @@
                     ></v-text-field>
                 </v-layout>
                 <v-btn :disabled="loading" @click="parse_data(hist_prod)">
-                    Clear-Sky-Prod (cashed)
+                    Clear-Sky-Prod (cached)
                 </v-btn>
                 <v-btn :disabled="loading" @click="get_prod_forecast()">
                     Clear-Sky-Prod
