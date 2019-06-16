@@ -1,7 +1,7 @@
 module.exports = {
   mode: "universal",
   head: {
-    title: "Uni Viva Social",
+    title: "EUrengy Demo Portal",
     dir: {
       // assets: 'custom-assets',
       // layouts: 'custom-layouts',
