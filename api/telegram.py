@@ -6,7 +6,8 @@ import telebot
 from flask import Flask
 from flask import request
 from flask_cors import cross_origin
-
+import requests
+import json
 
 app = Flask(__name__)
 
@@ -16,15 +17,13 @@ TOKEN = '802598551:AAEXpo1jDUoVmOfbjlILP455redbPVHZo8I'  # Eunergy_bot
 bot = telebot.TeleBot(TOKEN)
 
 
-# Echo
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
     #     print (dir(message))
-    print('chat:', message.chat.id)
-    bot.send_message(758479067, "Best!", )
+    #     print('chat:', message.chat.id)
+    #     bot.send_message(758479067, "Best!", )
+    bot.reply_to(message, "The chat support is not implemented yet!")
 
-
-#     bot.reply_to(message, "Howdy, how are you doing?")
 
 import time
 
@@ -41,11 +40,22 @@ def send_welcome(message):
     exit()
 
 
+@app.route("/weather")
+@cross_origin(headers=['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials'])
+def weather():
+    lng = request.args.get('lng')
+    lat = request.args.get('lat')
+    print('https://api.darksky.net/forecast/373c65ac8e97334a1f96d87c50227d27/{},{}'.format(lat, lng))
+    r = requests.get('https://api.darksky.net/forecast/373c65ac8e97334a1f96d87c50227d27/{},{}'.format(lat, lng))
+    print(r.json())
+    return flask.jsonify(r.json())
+
+
 @app.route("/")
 @cross_origin(headers=['Content-Type', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Credentials'])
 def hello():
     msg = request.args.get('msg')
-    bot.send_message(758479067, msg )
+    bot.send_message(758479067, msg)
     return "Hello World!"
 
 

@@ -2,7 +2,21 @@
 
 <template>
     <v-app>
+
+
         <v-sheet>
+            <v-layout>
+            <v-text-field
+                    v-model="lng"
+                    label="Longitude"
+                    required
+            ></v-text-field>
+            <v-text-field
+                    v-model="lat"
+                    label="Latitude"
+                    required
+            ></v-text-field>
+        </v-layout>
             <v-btn :disabled="loading" @click="parse_data(hist_prod)">
                 Use Cashed Data
             </v-btn>
@@ -31,7 +45,7 @@
   import BarChart from '~/components/bar-chart'
   import axios from "axios";
 
-  var api_url_prod_forecast = 'https://api.forecast.solar/estimate/54.9/25.3/37/0/1';
+  var api_url_prod_forecast = 'https://api.forecast.solar/estimate/52.359/4.880/37/0/1';
   var api_url_weather_forecast = 'http://localhost:4000/weather';
   //Clouds impact
   // http://proceedings.ases.org/wp-content/uploads/2014/02/2010-112.pdf
@@ -68,57 +82,60 @@
         labels: [],
         prod: {},
         hist_prod: {
-          "2019-06-16 04:32:00": 0,
-          "2019-06-16 04:46:00": 1,
-          "2019-06-16 05:00:00": 7,
-          "2019-06-16 06:00:00": 30,
-          "2019-06-16 07:00:00": 87,
-          "2019-06-16 08:00:00": 228,
-          "2019-06-16 09:00:00": 385,
-          "2019-06-16 10:00:00": 543,
-          "2019-06-16 11:00:00": 666,
-          "2019-06-16 12:00:00": 737,
-          "2019-06-16 13:00:00": 765,
-          "2019-06-16 14:00:00": 730,
-          "2019-06-16 15:00:00": 642,
-          "2019-06-16 16:00:00": 523,
-          "2019-06-16 17:00:00": 378,
-          "2019-06-16 18:00:00": 227,
-          "2019-06-16 19:00:00": 98,
-          "2019-06-16 20:00:00": 34,
-          "2019-06-16 21:00:00": 10,
-          "2019-06-16 21:33:00": 2,
-          "2019-06-16 22:06:00": 0,
-          "2019-06-17 04:32:00": 0,
-          "2019-06-17 04:46:00": 1,
-          "2019-06-17 05:00:00": 8,
-          "2019-06-17 06:00:00": 31,
-          "2019-06-17 07:00:00": 81,
-          "2019-06-17 08:00:00": 199,
-          "2019-06-17 09:00:00": 331,
-          "2019-06-17 10:00:00": 468,
-          "2019-06-17 11:00:00": 577,
-          "2019-06-17 12:00:00": 645,
-          "2019-06-17 13:00:00": 680,
-          "2019-06-17 14:00:00": 655,
-          "2019-06-17 15:00:00": 580,
-          "2019-06-17 16:00:00": 478,
-          "2019-06-17 17:00:00": 350,
-          "2019-06-17 18:00:00": 215,
-          "2019-06-17 19:00:00": 96,
-          "2019-06-17 20:00:00": 34,
-          "2019-06-17 21:00:00": 10,
-          "2019-06-17 21:34:00": 2,
-          "2019-06-17 22:07:00": 0
+          "2019-06-16 05:08:00": 0,
+          "2019-06-16 05:34:00": 3,
+          "2019-06-16 06:00:00": 20,
+          "2019-06-16 07:00:00": 62,
+          "2019-06-16 08:00:00": 159,
+          "2019-06-16 09:00:00": 294,
+          "2019-06-16 10:00:00": 434,
+          "2019-06-16 11:00:00": 555,
+          "2019-06-16 12:00:00": 644,
+          "2019-06-16 13:00:00": 698,
+          "2019-06-16 14:00:00": 693,
+          "2019-06-16 15:00:00": 634,
+          "2019-06-16 16:00:00": 531,
+          "2019-06-16 17:00:00": 398,
+          "2019-06-16 18:00:00": 256,
+          "2019-06-16 19:00:00": 122,
+          "2019-06-16 20:00:00": 46,
+          "2019-06-16 21:00:00": 22,
+          "2019-06-16 21:37:00": 3,
+          "2019-06-16 22:14:00": 0,
+          "2019-06-17 05:08:00": 0,
+          "2019-06-17 05:34:00": 3,
+          "2019-06-17 06:00:00": 20,
+          "2019-06-17 07:00:00": 63,
+          "2019-06-17 08:00:00": 166,
+          "2019-06-17 09:00:00": 314,
+          "2019-06-17 10:00:00": 471,
+          "2019-06-17 11:00:00": 612,
+          "2019-06-17 12:00:00": 712,
+          "2019-06-17 13:00:00": 762,
+          "2019-06-17 14:00:00": 748,
+          "2019-06-17 15:00:00": 687,
+          "2019-06-17 16:00:00": 572,
+          "2019-06-17 17:00:00": 425,
+          "2019-06-17 18:00:00": 266,
+          "2019-06-17 19:00:00": 124,
+          "2019-06-17 20:00:00": 45,
+          "2019-06-17 21:00:00": 21,
+          "2019-06-17 21:37:00": 3,
+          "2019-06-17 22:14:00": 0
         },
         loading: false,
-        weather_data: {}
+        weather_data: {},
+        lat: 52.359,
+        lng: 4.880
+
       }
     },
     methods: {
       get_weather_forecast: function () {
         this.loading = true;
-        api_weather_forecast()
+        api_weather_forecast({
+          url: this.api_url_weather_forecast
+        })
             .then(response => {
               console.log('Fetching');
               this.data_prod_weather = [];
@@ -150,7 +167,10 @@
                   let key = day + " " + str + ":00:00";
                   console.log(key, this.weather_data[key], this.data_prod[i - 1]);
                   if (this.weather_data.hasOwnProperty(key)) {
-                    this.data_prod_weather.push(this.weather_data[key] * this.data_prod[24 * j + i - 1]);
+                    this.data_prod_weather.push(
+                        this.weather_data[key] * 0.2 +
+                        this.weather_data[key] * 0.80 * this.data_prod[24 * j + i - 1]
+                    );
                   } else {
                     this.data_prod_weather.push(this.data_prod[24 * j + i - 1]);
                   }
@@ -168,6 +188,7 @@
       get_prod_forecast: function () {
         this.loading = true;
         api_prod_forecast(
+            {url: this.api_url_prod_forecast}
         )
             .then(response => {
               console.log('Fetching');
@@ -211,6 +232,14 @@
 
 
       }
+    },
+    computed: {
+      api_url_prod_forecast: function () {
+        return 'https://api.forecast.solar/estimate/' + this.lat + '/' + this.lng + '/37/0/1'
+      },
+      api_url_weather_forecast: function () {
+        return 'http://localhost:4000/weather?lng=' + this.lng + '&lat=' + this.lat
+      },
     }
   }
 </script>
