@@ -29,29 +29,35 @@ export default {
   mounted() {
     this.draw_chart();
   },
+  data() {
+    return {
+
+    }
+  },
   methods: {
     draw_chart: function () {
       this.renderChart({
             labels: this.labels,
             datasets: [
               {
-                label: 'Production',
+                label: 'Clear Sky Prod',
                 backgroundColor: 'rgba(231, 0, 255, 0)',
                 borderColor: '#fc6f77',
                 data: this.data_prod
               },
-              {
-                label: 'Load',
-                backgroundColor: 'rgba(0, 231, 255, 0)',
-                borderColor: '#646afc',
-                data: this.data_load
-              },
-              {
-                label: 'Clouds',
+                {
+                label: 'Real Weather Prod',
                 backgroundColor: 'rgba(0, 231, 255, 0)',
                 borderColor: '#4fd0fc',
                 data: this.data_prod_weather
               },
+              {
+                label: 'Load',
+                backgroundColor: 'rgba(0, 231, 255, 0)',
+                borderColor: '#000000',
+                data: this.data_load
+              },
+
             ]
           }, {
             responsive: true,
@@ -82,6 +88,9 @@ export default {
       this.draw_chart();
     },
     data_prod_weather: function () {
+      this.draw_chart();
+    },
+    data_load: function () {
       this.draw_chart();
     },
   }

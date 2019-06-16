@@ -216,16 +216,68 @@
             let key = day + " " + str + ":00:00";
             if (prod_data.hasOwnProperty(key)) {
               this.data_prod.push(prod_data[key]);
-              this.data_load.push(prod_data[key]);
+              // this.data_load.push(prod_data[key]);
               this.labels.push(day + " " + str);
             } else {
               this.data_prod.push(0);
-              this.data_load.push(0);
+              // this.data_load.push(0);
               this.labels.push(day + " " + str);
             }
           }
           ;
         }
+        this.data_load = [
+          61.699,
+          59.909,
+          58.463,
+          57.893,
+          58.668,
+          60.979,
+          68.258,
+          73.292,
+          74.571,
+          74.388,
+          74.538,
+          74.854,
+          74.541,
+          73.403,
+          72.81,
+          71.772,
+          71.377,
+          72.269,
+          75.238,
+          75.326,
+          71.008,
+          67.82,
+          65.951,
+          62.156,
+          60.652,
+          59.114,
+          58.04,
+          57.81,
+          57.864,
+          60.087,
+          66.962,
+          72.425,
+          75.401,
+          75.79,
+          76.02,
+          75.934,
+          75.53,
+          73.391,
+          72.382,
+          71.486,
+          70.423,
+          71.109,
+          72.822,
+          72.701,
+          68.622,
+          65.245,
+        ];
+        for(let i =0;i<this.data_load.length;i++){
+          this.data_load[i]=(this.data_load[i]-50)*25
+        }
+
 
 
       }
