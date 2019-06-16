@@ -25,7 +25,7 @@ var options = {
 
 export default {
   extends: VueChartJs.Line,
-  props: ['data_prod', 'data_load', 'options', 'labels'],
+  props: ['data_prod', 'data_load', 'options', 'labels', 'data_prod_weather'],
   mounted() {
     this.draw_chart();
   },
@@ -45,6 +45,12 @@ export default {
                 backgroundColor: 'rgba(0, 231, 255, 0)',
                 borderColor: '#646afc',
                 data: this.data_load
+              },
+              {
+                label: 'Clouds',
+                backgroundColor: 'rgba(0, 231, 255, 0)',
+                borderColor: '#4fd0fc',
+                data: this.data_prod_weather
               },
             ]
           }, {
@@ -74,6 +80,9 @@ export default {
   watch: {
     data_prod: function () {
       this.draw_chart();
-    }
+    },
+    data_prod_weather: function () {
+      this.draw_chart();
+    },
   }
 }
