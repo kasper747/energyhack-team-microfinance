@@ -42,19 +42,28 @@
         assets: [
           {
             m2: 5,
-            eff: 0.10,
-            elevation: "100m"
+            efficiency: 0.21,
+            elevation: "100m",
+            tilt_angle: "30°",
+            direction: "180°",
+            address: "Amsterdam"
           },
           {
-            m2: 3,
-            eff: 0.15,
-            elevation: "150m"
+            m2: 10,
+            efficiency: 0.15,
+            elevation: "250m",
+            tilt_angle: "30°",
+            direction: "180°",
+            address: "Amsterdam"
           }
         ],
         pv_params: {
           m2: 5,
-          eff: 0.10,
-          elevation: "100m"
+          efficiency: 0.21,
+          elevation: "100m",
+          tilt_angle: "30°",
+          direction: "180°",
+          address: "Amsterdam"
         },
       }
     },
